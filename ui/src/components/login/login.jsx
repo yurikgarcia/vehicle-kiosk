@@ -9,6 +9,10 @@ import Container from '@mui/material/Container';
 
 
 export const Login = () => {
+  const [login, setLogin] = useState({
+    username: '',
+    password: '',
+  })
 
   return (
     <Box
@@ -57,16 +61,17 @@ export const Login = () => {
               margin='normal'
               required
               fullWidth
-              id='email'
-              label='Email'
-              name='email'
-              autoComplete='email'
+              id='username'
+              label='User Name'
+              name='userName'
+              autoComplete='Username'
               autoFocus
-              // onChange={e => {
-              //   setLoginCredentials(prev => {
-              //     return { ...prev, email: e.target.value };
-              //   });
-              // }}
+              onChange={e => {
+                setLogin(prev => {
+                  return { ...prev, userName: e.target.value };
+                });
+                
+              }}
             />
             <TextField
               // error={failedLogin}
@@ -78,16 +83,17 @@ export const Login = () => {
               type='password'
               id='password'
               autoComplete='current-password'
-              // onChange={e => {
-              //   setLoginCredentials(prev => {
-              //     return { ...prev, password: e.target.value };
-              //   });
-              // }}
-              // onKeyPress={event => {
-              //   if (event.key === 'Enter') {
-              //     postLogin();
-              //   }
-              // }}
+              onChange={e => {
+                setLogin(prev => {
+                  return { ...prev, password: e.target.value };
+                });
+              }}
+              onKeyPress={event => {
+                if (event.key === 'Enter') {
+                  // postLogin();
+
+                }
+              }}
             />
           </Box>
 
@@ -100,7 +106,7 @@ export const Login = () => {
               borderRadius: '30px',
               width: 200,
             }}
-            // onClick={() => postLogin()}
+            onClick={() => console.log(login)}
           >
             Login
           </Button>

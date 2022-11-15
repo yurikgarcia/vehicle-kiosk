@@ -2,8 +2,10 @@ import { MenuItem, TextField, Autocomplete } from "@mui/material/";
 
 export const YuriksStates = () => {
   return (
-    <TextField
-      //   error={failedRegister}
+    <TextField 
+    //   error={failedRegister}
+      sx={{ width: 150 }} 
+      variant="outlined"
       fullWidth
       required
       id="state"
