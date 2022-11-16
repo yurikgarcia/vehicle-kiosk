@@ -1,8 +1,8 @@
-
+const client = require("../db/client");
 
 const getAllVehicles = async (req, res) => {
   try {
-    const all = await client.query("SELECT * FROM vehicles")
+    const all = await client.query("SELECT * FROM sfs45_cape");
     res.status(200).send(all.rows);
   } catch (err) {
     console.log(err);
@@ -11,23 +11,24 @@ const getAllVehicles = async (req, res) => {
 };
 
 const addVehicle = async (req, res) => {
-  try {
     const vehicle = {
       first_name: req.body.first_name,
       last_name: req.body.last_name,
-      dl: req.body.dl,
+      drivers_license: req.body.dl,
       plate: req.body.plate,
       make: req.body.make,
       model: req.body.model,
     };
     console.log(vehicle);
+  try {
 
-    await client.connect();
+
+    
     let result = await client.query(
-      "INSERT INTO vehicles(first_name, last_name, dl, plate, make, model) VALUES($1, $2, $3, $4, $5, $6)",
-      vehicle
+      `INSERT INTO sfs45_cape (first_name, last_name, drivers_license, plate, make, model) values('${vehicle.first_name}', '${vehicle.last_name}', '${vehicle.drivers_license}', '${vehicle.plate}', '${vehicle.make}', '${vehicle.model}')`
     );
-    res.status(200).send(result.rows);
+
+    res.status(200).send(result);
   } catch (err) {
     console.log(err);
     res.status(500).send(err);

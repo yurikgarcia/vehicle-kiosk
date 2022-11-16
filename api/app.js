@@ -4,15 +4,8 @@ require("dotenv").config();
 const cors = require("cors");
 const port = 8080;
 const vehicleRoutes = require("./routes/vehicles");
-
+const client = require("./db/client");
 // DB Connection
-const { Client } = require("pg");
-const client = new Client({
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-});
 
 client
   .connect()

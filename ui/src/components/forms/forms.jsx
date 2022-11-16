@@ -29,6 +29,7 @@ export const Forms = () => {
     if (firstName === "") {
       setFirstNameError(true);
     }
+
     if (lastName === "") {
       setLastNameError(true);
     }
