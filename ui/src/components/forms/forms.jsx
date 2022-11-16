@@ -11,83 +11,114 @@ import {
 } from "@mui/material/";
 import { YuriksStates } from "./yuriksStates";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
+import logo from "../image/logo.svg";
+import { height } from "@mui/system";
 
 export const Forms = () => {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [firstNameError, setFirstNameError] = useState(false);
+  const [lastNameError, setLastNameError] = useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    setFirstNameError(false);
+    setLastNameError(false);
+
+    if (firstName === "") {
+      setFirstNameError(true);
+    }
+    if (lastName === "") {
+      setLastNameError(true);
+    }
+  };
+
   return (
-    <span>
-      <header>
-        <h1> Search Gate Kiosk </h1>
-      </header>
+    <>
       <Box
         sx={{
           display: "flex",
-          boxShadow: 3,
-          display: "grid",
-          gap: 1,
-
+          justifyContent: "center",
+          mb: 1,
         }}
       >
-        <Container >
+        <h1> Inspection Gate Kiosk </h1>
+        <img src={logo} alt="Security Forces Logo" />
+      </Box>
+      <Box
+        sx={{
+          display: "grid",
+          boxShadow: 3,
+          gap: 1,
+        }}
+      >
+        <Container>
           <h2> Personal Information </h2>
 
-          <TextField
-            required
-            id="name"
-            label="Full Name"
-            name="name"
-            autoComplete="name"
-          />
+          <form noValidate autoComplete="off" onSubmit={handleSubmit}>
+            <TextField
+              required
+              onChange={(e) => setFirstName(e.target.value)}
+              id="firstName"
+              label="First Name"
+              name="firstName"
+              autoComplete="firstName"
+              error={firstNameError}
+              helperText="Please enter your first name"
+              sx={{ boxShadow: 2 }}
+            />
+            <TextField
+              onChange={(e) => setLastName(e.target.value)}
+              required
+              id="lastName"
+              label="Last Name"
+              name="lastName"
+              autoComplete="lastName"
+              error={lastNameError}
+              helperText="Please enter your first name"
+              sx={{ boxShadow: 2 }}
+            />
+            <Button variant="contained"> Print Pass </Button>
+          </form>
         </Container>
 
         <Container
-          sx={{ 
-          flexWrap: 'wrap',
-           }}> 
+          sx={{
+            flexWrap: "wrap",
+          }}
+        >
           <h2> Vehicle Information </h2>
-          <TextField 
+          <TextField
             required
             id="plate"
             label="Plate Number"
             name="Plate Number"
+            sx={{ boxShadow: 2 }}
           />
           <YuriksStates />
 
-          <TextField 
+          <TextField
             required
             id="dl"
             label="Driver's License Number"
             name="Driver's License Number"
-            />
-          <TextField 
-            required
-            id="make"
-            label="Make"
-            name="make"
-            />
-          <TextField 
-            required
-            id="model"
-            label="Model"
-            name="model"
-            />
-          </Container>
+          />
+          <TextField required id="make" label="Make" name="make" />
+          <TextField required id="model" label="Model" name="model" />
+        </Container>
 
-          <Box 
-            sx={{ 
-                display: 'flex', 
-                mt :2, 
-                mb: 2,
-                justifyContent: 'center'
-            }}>
-            <Button variant="contained"> Print Pass </Button>
-          </Box>
-
+        <Box
+          sx={{
+            display: "flex",
+            mt: 2,
+            mb: 2,
+            justifyContent: "center",
+          }}
+        >
+          <Button variant="contained"> Print Pass </Button>
+        </Box>
       </Box>
-
-
-
-
-
-    </span>
+    </>
   );
 };
