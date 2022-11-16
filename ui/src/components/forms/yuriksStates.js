@@ -1,8 +1,8 @@
-import { MenuItem, TextField, Autocomplete } from "@mui/material/";
+import { MenuItem, Menu, Autocomplete } from "@mui/material/";
 
 export const YuriksStates = () => {
   return (
-    <TextField 
+    <Menu
     //   error={failedRegister}
       sx={{ width: 150 }} 
       variant="outlined"
@@ -76,6 +76,6 @@ export const YuriksStates = () => {
       <MenuItem value="WY">Wyoming</MenuItem>
       <MenuItem value="AA">Armed Forces Americas</MenuItem>
       <MenuItem value="other">Other</MenuItem>
-    </TextField>
+    </Menu>
   );
 };
