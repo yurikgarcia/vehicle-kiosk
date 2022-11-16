@@ -17,14 +17,13 @@ import { height } from "@mui/system";
 export const Forms = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [firstNameError, setFirstNameError] = useState(false);
+  const [firstNameError, setFirstNameError] = useState(true);
   const [lastNameError, setLastNameError] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    setFirstNameError(false);
-    setLastNameError(false);
+    setFirstName(false);
+    setLastName(false);
 
     if (firstName === "") {
       setFirstNameError(true);
@@ -54,9 +53,17 @@ export const Forms = () => {
         }}
       >
         <Container>
-          <h2> Personal Information </h2>
-
-          <form noValidate autoComplete="off" onSubmit={handleSubmit}>
+          <form
+            noValidate
+            autoComplete="off"
+            onSubmit={handleSubmit}
+            sx={{
+              display: "grid",
+              boxShadow: 3,
+              gap: 1,
+            }}
+          >
+            <h2> Personal Information </h2>
             <TextField
               required
               onChange={(e) => setFirstName(e.target.value)}
@@ -79,45 +86,27 @@ export const Forms = () => {
               helperText="Please enter your first name"
               sx={{ boxShadow: 2 }}
             />
+            <h2> Vehicle Information </h2>
+            <TextField
+              required
+              id="plate"
+              label="Plate Number"
+              name="Plate Number"
+              sx={{ boxShadow: 2 }}
+            />
+            <YuriksStates />
+
+            <TextField
+              required
+              id="dl"
+              label="Driver's License Number"
+              name="Driver's License Number"
+            />
+            <TextField required id="make" label="Make" name="make" />
+            <TextField required id="model" label="Model" name="model" />
             <Button variant="contained"> Print Pass </Button>
           </form>
         </Container>
-
-        <Container
-          sx={{
-            flexWrap: "wrap",
-          }}
-        >
-          <h2> Vehicle Information </h2>
-          <TextField
-            required
-            id="plate"
-            label="Plate Number"
-            name="Plate Number"
-            sx={{ boxShadow: 2 }}
-          />
-          <YuriksStates />
-
-          <TextField
-            required
-            id="dl"
-            label="Driver's License Number"
-            name="Driver's License Number"
-          />
-          <TextField required id="make" label="Make" name="make" />
-          <TextField required id="model" label="Model" name="model" />
-        </Container>
-
-        <Box
-          sx={{
-            display: "flex",
-            mt: 2,
-            mb: 2,
-            justifyContent: "center",
-          }}
-        >
-          <Button variant="contained"> Print Pass </Button>
-        </Box>
       </Box>
     </>
   );
