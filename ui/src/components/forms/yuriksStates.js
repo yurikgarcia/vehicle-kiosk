@@ -1,8 +1,8 @@
-import { MenuItem, Menu, Autocomplete } from "@mui/material/";
+import { MenuItem, TextField, Autocomplete } from "@mui/material/";
 
 export const YuriksStates = () => {
   return (
-    <Menu
+    <TextField
     //   error={failedRegister}
       sx={{ width: 150 }} 
       variant="outlined"
@@ -13,14 +13,15 @@ export const YuriksStates = () => {
       name="state"
       defaultValue=""
       select
-    //   //   onChange={e => {
-    //   //     setUserInfo(prev => {
-    //   //       return { ...prev, rank: e.target.value };
-    //   //     });
-    //   //   }}
+        // onChange={e => {
+        //   setVehicle(prev => {
+        //     return { ...prev, state: e.target.value };
+        //   });
+        // }}
 
 
     >
+   
       <MenuItem value="AL">Alabama</MenuItem>
       <MenuItem value="AK">Alaska</MenuItem>
       <MenuItem value="AZ">Arizona</MenuItem>
@@ -76,6 +77,7 @@ export const YuriksStates = () => {
       <MenuItem value="WY">Wyoming</MenuItem>
       <MenuItem value="AA">Armed Forces Americas</MenuItem>
       <MenuItem value="other">Other</MenuItem>
-    </Menu>
+    
+   </TextField>
   );
 };

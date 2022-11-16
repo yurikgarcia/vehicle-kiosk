@@ -22,16 +22,10 @@ import { height } from "@mui/system";
 //   },
 // });
 
+
+
 export const Forms = () => {
-  // const [firstName, setFirstName] = useState("");
-  // const [lastName, setLastName] = useState("");
-  const [firstNameError, setFirstNameError] = useState(false);
-  const [lastNameError, setLastNameError] = useState("");
-  // const [plate, setPlate] = useState("");
-  // const [dl, setDl] = useState("");
-  // const [state, setState] = useState("");
-  // const [make, setMake] = useState("");
-  // const [model, setModel] = useState("");
+  const [failedRegister, setFailedRegister] = useState(false)
   const [vehicle, setVehicle] = useState({
     first_name: "",
     last_name: "",
@@ -42,26 +36,35 @@ export const Forms = () => {
     model: "",
   });
 
-  // const vehicle = {
-  //   first_name: firstName,
-  //   last_name: lastName,
-  //   plate: plate,
-  //   state: state,
-  // }
+ const fullDl = vehicle.state + vehicle.drivers_license
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   setFirstName(false);
-  //   setLastName(false);
+  const postUser = () => {
+    console.log('posting user')
+    setFailedRegister(false);
+      const {  first_name,
+      last_name,
+      plate,
+      drivers_license,
+      state,
+      make,
+      model} = vehicle
+    if (
+      first_name === "" ||
+      last_name === "" ||
+      plate === "" ||
+      drivers_license === "" ||
+      state === "" ||
+      make === "" || 
+      model === '' 
+      ) {
+        setFailedRegister(true)
+        alert('Please fill out all fields.')
+        return
+      }
+      console.log(vehicle)
 
-  //   if (firstName === "") {
-  //     setFirstNameError(true);
-  //   }
-
-  //   if (lastName === "") {
-  //     setLastNameError(true);
-  //   }
-  // };
+  }
+ 
 
   return (
     <>
@@ -106,12 +109,12 @@ export const Forms = () => {
               label="First Name"
               name="firstName"
               autoComplete="firstName"
-              error={firstNameError}
+              error={failedRegister}
               helperText="Please enter your first name"
               sx={{ boxShadow: 2 }}
             />
             <TextField
-              onChange={ (e) =>
+              onChange={(e) =>
                 setVehicle((prev) => {
                   return { ...prev, last_name: e.target.value };
                 })
@@ -121,13 +124,14 @@ export const Forms = () => {
               label="Last Name"
               name="lastName"
               autoComplete="lastName"
-              error={lastNameError}
+              error={failedRegister}
               helperText="Please enter your first name"
               sx={{ boxShadow: 2 }}
             />
             <h2> Vehicle Information </h2>
             <TextField
-              onChange={ (e) =>
+            error={failedRegister}
+              onChange={(e) =>
                 setVehicle((prev) => {
                   return { ...prev, plate: e.target.value };
                 })
@@ -138,18 +142,111 @@ export const Forms = () => {
               name="Plate Number"
               sx={{ boxShadow: 2 }}
             />
-            <YuriksStates
-            onChange={ (e) =>
-              setVehicle((prev) => {
-                return { ...prev, state: e.currentTarget.value };
-              })
-            }
-            />
 
             <TextField
-              onChange={ (e) =>
-                setVehicle( 
-                  (prev) => {
+              error={failedRegister}
+              sx={{ width: 150 }}
+              variant="outlined"
+              fullWidth
+              required
+              id="state"
+              label="State"
+              name="state"
+              defaultValue=""
+              select
+              onChange={(e) => {
+                setVehicle((prev) => {
+                  return { ...prev, state: e.target.value };
+                });
+              }}
+            >
+              <MenuItem value="AL">Alabama</MenuItem>
+              <MenuItem value="AK">Alaska</MenuItem>
+              <MenuItem value="AZ">Arizona</MenuItem>
+              <MenuItem value="AR">Arkansas</MenuItem>
+              <MenuItem value="CA">California</MenuItem>
+              <MenuItem value="CO">Colorado</MenuItem>
+              <MenuItem value="CT">Connecticut</MenuItem>
+              <MenuItem value="DE">Delaware</MenuItem>
+              <MenuItem value="DC">District of Columbia</MenuItem>
+              <MenuItem value="FL">Florida</MenuItem>
+              <MenuItem value="GA">Georgia</MenuItem>
+              <MenuItem value="GU">Guam</MenuItem>
+              <MenuItem value="HI">Hawaii</MenuItem>
+              <MenuItem value="ID">Idaho</MenuItem>
+              <MenuItem value="IL">Illinois</MenuItem>
+              <MenuItem value="IN">Indiana</MenuItem>
+              <MenuItem value="IA">Iowa</MenuItem>
+              <MenuItem value="KS">Kansas</MenuItem>
+              <MenuItem value="KY">Kentucky</MenuItem>
+              <MenuItem value="LA">Louisiana</MenuItem>
+              <MenuItem value="ME">Maine</MenuItem>
+              <MenuItem value="MD">Maryland</MenuItem>
+              <MenuItem value="MA">Massachusetts</MenuItem>
+              <MenuItem value="MI">Michigan</MenuItem>
+              <MenuItem value="MN">Minnesota</MenuItem>
+              <MenuItem value="MS">Mississippi</MenuItem>
+              <MenuItem value="MO">Missouri</MenuItem>
+              <MenuItem value="MT">Montana</MenuItem>
+              <MenuItem value="NE">Nebraska</MenuItem>
+              <MenuItem value="NV">Nevada</MenuItem>
+              <MenuItem value="NH">New Hampshire</MenuItem>
+              <MenuItem value="NJ">New Jersey</MenuItem>
+              <MenuItem value="NM">New Mexico</MenuItem>
+              <MenuItem value="NY">New York</MenuItem>
+              <MenuItem value="NC">North Carolina</MenuItem>
+              <MenuItem value="ND">North Dakota</MenuItem>
+              <MenuItem value="OH">Ohio</MenuItem>
+              <MenuItem value="OK">Oklahoma</MenuItem>
+              <MenuItem value="OR">Oregon</MenuItem>
+              <MenuItem value="PA">Pennsylvania</MenuItem>
+              <MenuItem value="PR">Puerto Rico</MenuItem>
+              <MenuItem value="RI">Rhode Island</MenuItem>
+              <MenuItem value="SC">South Carolina</MenuItem>
+              <MenuItem value="SD">South Dakota</MenuItem>
+              <MenuItem value="TN">Tennessee</MenuItem>
+              <MenuItem value="TX">Texas</MenuItem>
+              <MenuItem value="UT">Utah</MenuItem>
+              <MenuItem value="VT">Vermont</MenuItem>
+              <MenuItem value="VA">Virginia</MenuItem>
+              <MenuItem value="WA">Washington</MenuItem>
+              <MenuItem value="WV">West Virginia</MenuItem>
+              <MenuItem value="WI">Wisconsin</MenuItem>
+              <MenuItem value="WY">Wyoming</MenuItem>
+              <MenuItem value="AA">Armed Forces Americas</MenuItem>
+              <MenuItem value="other">Other</MenuItem>
+            </TextField>
+
+            {/* <TextField
+              //   error={failedRegister}
+              sx={{ width: 150 }}
+              variant="outlined"
+              fullWidth
+              required
+              id="state"
+              label="State"
+              name="state"
+              defaultValue=""
+              select
+              onChange={(e) => {
+                setVehicle((prev) => {
+                  return { ...prev, state: e.target.value };
+                });
+              }}
+            >
+              <YuriksStates
+              onClick={ (e) =>
+                setVehicle((prev) => {
+                  return { ...prev, state: e.target.value };
+                })
+              }
+              />
+            </TextField> */}
+
+            <TextField
+            error={failedRegister}
+              onChange={(e) =>
+                setVehicle((prev) => {
                   return { ...prev, drivers_license: e.target.value };
                 })
               }
@@ -159,6 +256,7 @@ export const Forms = () => {
               name="Driver's License Number"
             />
             <TextField
+            error={failedRegister}
               onChange={(e) =>
                 setVehicle((prev) => {
                   return { ...prev, make: e.target.value };
@@ -170,6 +268,7 @@ export const Forms = () => {
               name="make"
             />
             <TextField
+            error={failedRegister}
               onChange={(e) =>
                 setVehicle((prev) => {
                   return { ...prev, model: e.target.value };
@@ -180,7 +279,7 @@ export const Forms = () => {
               label="Model"
               name="model"
             />
-            <Button variant="contained" onClick={() => console.log(vehicle)}>
+            <Button variant="contained" onClick={postUser}>
               {" "}
               Print Pass{" "}
             </Button>
