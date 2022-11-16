@@ -13,11 +13,19 @@ import { YuriksStates } from "./yuriksStates";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import logo from "../image/logo.svg";
 import { height } from "@mui/system";
+import { makeStyles } from "@mui/styles";
+
+const useStyles = makeStyles({
+  field: {
+    marginTop: 20,
+    marginBottom: 20,
+  },
+});
 
 export const Forms = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [firstNameError, setFirstNameError] = useState(true);
+  const [firstNameError, setFirstNameError] = useState(false);
   const [lastNameError, setLastNameError] = useState(false);
 
   const handleSubmit = (e) => {
@@ -28,6 +36,7 @@ export const Forms = () => {
     if (firstName === "") {
       setFirstNameError(true);
     }
+
     if (lastName === "") {
       setLastNameError(true);
     }
