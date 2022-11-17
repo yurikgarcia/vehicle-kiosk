@@ -23,7 +23,12 @@ import { height } from "@mui/system";
 // });
 
 export const Forms = () => {
+  const date = new Date();
+  const today =
+    date.toISOString().slice(0, 10) + " " + date.toTimeString().slice(0, 5);
+
   const [failedRegister, setFailedRegister] = useState(false);
+  const [flag, setFlag] = useState(false);
   const [vehicle, setVehicle] = useState({
     first_name: "",
     last_name: "",
@@ -32,9 +37,15 @@ export const Forms = () => {
     state: "",
     make: "",
     model: "",
+    date: today,
   });
-   const date = new Date()
-   const today = date.toISOString().slice(0,10) + " " + date.toTimeString().slice(0,5)
+  // date for printing on pa
+
+  const reload = () => {
+    window.location.reload();
+  };
+
+  // posting vehicle and user info to the database
   const postUser = () => {
     console.log("posting vehicle");
     setFailedRegister(false);
@@ -63,11 +74,13 @@ export const Forms = () => {
       },
     })
       .then((res) => res.json())
+      .then(setFlag(true))
+
       .catch((err) => {
         console.log("Error: ", err);
       });
-
     console.log("vehicle has been posted");
+    reload();
   };
 
   return (
@@ -80,8 +93,8 @@ export const Forms = () => {
         }}
       >
         <h1> Inspection Gate Kiosk </h1>
-        <span> {today} </span>
         <img src={logo} alt="Security Forces Logo" />
+        <>{today}</>
       </Box>
       <Box
         sx={{
@@ -89,7 +102,7 @@ export const Forms = () => {
           boxShadow: 3,
           gap: 1,
         }}
-      >  
+      >
         <Container>
           <form
             noValidate
@@ -115,8 +128,8 @@ export const Forms = () => {
               name="firstName"
               autoComplete="firstName"
               error={failedRegister}
-              helperText="Please enter your first name"
-              sx={{ boxShadow: 2 }}
+              // helperText="Please enter your first name"
+              sx={{ boxShadow: 2, m: 1 }}
             />
             <TextField
               onChange={(e) =>
@@ -130,8 +143,8 @@ export const Forms = () => {
               name="lastName"
               autoComplete="lastName"
               error={failedRegister}
-              helperText="Please enter your first name"
-              sx={{ boxShadow: 2 }}
+              // helperText="Please enter your first name"
+              sx={{ boxShadow: 2, m: 1 }}
             />
             <h2> Vehicle Information </h2>
             <TextField
@@ -145,12 +158,12 @@ export const Forms = () => {
               id="plate"
               label="Plate Number"
               name="Plate Number"
-              sx={{ boxShadow: 2 }}
+              sx={{ boxShadow: 2, m: 1 }}
             />
 
             <TextField
               error={failedRegister}
-              sx={{ width: 150 }}
+              sx={{ boxShadow: 2, m: 1 }}
               variant="outlined"
               fullWidth
               required
@@ -222,34 +235,9 @@ export const Forms = () => {
               <MenuItem value="other">Other</MenuItem>
             </TextField>
 
-            {/* <TextField
-              //   error={failedRegister}
-              sx={{ width: 150 }}
-              variant="outlined"
-              fullWidth
-              required
-              id="state"
-              label="State"
-              name="state"
-              defaultValue=""
-              select
-              onChange={(e) => {
-                setVehicle((prev) => {
-                  return { ...prev, state: e.target.value };
-                });
-              }}
-            >
-              <YuriksStates
-              onClick={ (e) =>
-                setVehicle((prev) => {
-                  return { ...prev, state: e.target.value };
-                })
-              }
-              />
-            </TextField> */}
-
             <TextField
               error={failedRegister}
+              sx={{ width: 150, m: 1 }}
               onChange={(e) =>
                 setVehicle((prev) => {
                   return { ...prev, drivers_license: e.target.value };
@@ -261,6 +249,7 @@ export const Forms = () => {
               name="Driver's License Number"
             />
             <TextField
+              sx={{ width: 150, m: 1 }}
               error={failedRegister}
               onChange={(e) =>
                 setVehicle((prev) => {
@@ -273,6 +262,7 @@ export const Forms = () => {
               name="make"
             />
             <TextField
+              sx={{ width: 150, m: 1 }}
               error={failedRegister}
               onChange={(e) =>
                 setVehicle((prev) => {
@@ -284,7 +274,13 @@ export const Forms = () => {
               label="Model"
               name="model"
             />
-            <Button variant="contained" onClick={postUser}>
+            <Button
+              sx={{ width: 150, m: 1 }}
+              variant="contained"
+              onClick={() => {
+                postUser();
+              }}
+            >
               {" "}
               Print Pass{" "}
             </Button>

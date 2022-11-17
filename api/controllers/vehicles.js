@@ -18,7 +18,8 @@ const addVehicle = async (req, res) => {
       plate: req.body.plate,
       make: req.body.make,
       model: req.body.model,
-      state: req.body.state
+      state: req.body.state,
+      date: req.body.date
     };
     console.log(vehicle);
   try {
@@ -26,7 +27,7 @@ const addVehicle = async (req, res) => {
 
     
     let result = await client.query(
-      `INSERT INTO sfs45_cape (first_name, last_name, drivers_license, plate, make, model, state) values('${vehicle.first_name}', '${vehicle.last_name}', '${vehicle.drivers_license}', '${vehicle.plate}', '${vehicle.make}', '${vehicle.model}', '${vehicle.state}')`
+      `INSERT INTO sfs45_cape (first_name, last_name, drivers_license, plate, make, model, state, date) values('${vehicle.first_name}', '${vehicle.last_name}', '${vehicle.drivers_license}', '${vehicle.plate}', '${vehicle.make}', '${vehicle.model}', '${vehicle.state}', '${vehicle.date}')`
     );
 
     res.status(200).send(result);
