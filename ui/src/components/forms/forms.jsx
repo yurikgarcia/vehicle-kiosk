@@ -22,10 +22,8 @@ import { height } from "@mui/system";
 //   },
 // });
 
-
-
 export const Forms = () => {
-  const [failedRegister, setFailedRegister] = useState(false)
+  const [failedRegister, setFailedRegister] = useState(false);
   const [vehicle, setVehicle] = useState({
     first_name: "",
     last_name: "",
@@ -35,36 +33,42 @@ export const Forms = () => {
     make: "",
     model: "",
   });
-
- const fullDl = vehicle.state + vehicle.drivers_license
-
+   const date = new Date()
+   const today = date.toISOString().slice(0,10) + " " + date.toTimeString().slice(0,5)
   const postUser = () => {
-    console.log('posting user')
+    console.log("posting vehicle");
     setFailedRegister(false);
-      const {  first_name,
-      last_name,
-      plate,
-      drivers_license,
-      state,
-      make,
-      model} = vehicle
-    if (
-      first_name === "" ||
-      last_name === "" ||
-      plate === "" ||
-      drivers_license === "" ||
-      state === "" ||
-      make === "" || 
-      model === '' 
-      ) {
-        setFailedRegister(true)
-        alert('Please fill out all fields.')
-        return
-      }
-      console.log(vehicle)
 
-  }
- 
+    if (
+      vehicle.first_name === "" ||
+      vehicle.last_name === "" ||
+      vehicle.plate === "" ||
+      vehicle.drivers_license === "" ||
+      vehicle.state === "" ||
+      vehicle.make === "" ||
+      vehicle.model === ""
+    ) {
+      setFailedRegister(true);
+      alert("Please fill out all fields.");
+      return;
+    }
+    console.log(vehicle.drivers_license);
+    console.log(vehicle.first_name);
+    fetch("http://localhost:8080/api", {
+      method: "POST",
+      credentials: "include",
+      body: JSON.stringify(vehicle),
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+      },
+    })
+      .then((res) => res.json())
+      .catch((err) => {
+        console.log("Error: ", err);
+      });
+
+    console.log("vehicle has been posted");
+  };
 
   return (
     <>
@@ -76,6 +80,7 @@ export const Forms = () => {
         }}
       >
         <h1> Inspection Gate Kiosk </h1>
+        <span> {today} </span>
         <img src={logo} alt="Security Forces Logo" />
       </Box>
       <Box
@@ -84,7 +89,7 @@ export const Forms = () => {
           boxShadow: 3,
           gap: 1,
         }}
-      >
+      >  
         <Container>
           <form
             noValidate
@@ -130,7 +135,7 @@ export const Forms = () => {
             />
             <h2> Vehicle Information </h2>
             <TextField
-            error={failedRegister}
+              error={failedRegister}
               onChange={(e) =>
                 setVehicle((prev) => {
                   return { ...prev, plate: e.target.value };
@@ -244,7 +249,7 @@ export const Forms = () => {
             </TextField> */}
 
             <TextField
-            error={failedRegister}
+              error={failedRegister}
               onChange={(e) =>
                 setVehicle((prev) => {
                   return { ...prev, drivers_license: e.target.value };
@@ -256,7 +261,7 @@ export const Forms = () => {
               name="Driver's License Number"
             />
             <TextField
-            error={failedRegister}
+              error={failedRegister}
               onChange={(e) =>
                 setVehicle((prev) => {
                   return { ...prev, make: e.target.value };
@@ -268,7 +273,7 @@ export const Forms = () => {
               name="make"
             />
             <TextField
-            error={failedRegister}
+              error={failedRegister}
               onChange={(e) =>
                 setVehicle((prev) => {
                   return { ...prev, model: e.target.value };

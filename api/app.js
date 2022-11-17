@@ -7,12 +7,27 @@ const vehicleRoutes = require("./routes/vehicles");
 const client = require("./db/client");
 // DB Connection
 
+const whitelist = ["http://localhost:3000"];
+const corsOptions = {
+  credentials: true,
+  origin: function (origin, callback) {
+    // console.log(origin);
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else if (origin === undefined) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+};
+
 client
   .connect()
   .then(() => console.log("Connected to database"))
   .catch((err) => console.log(err));
 
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 
 //inital API route
