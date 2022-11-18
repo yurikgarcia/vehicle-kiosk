@@ -63,12 +63,12 @@ export const Login = () => {
               fullWidth
               id='username'
               label='User Name'
-              name='userName'
+              name='username'
               autoComplete='Username'
               autoFocus
               onChange={e => {
                 setLogin(prev => {
-                  return { ...prev, userName: e.target.value };
+                  return { ...prev, username: e.target.value };
                 });
                 
               }}

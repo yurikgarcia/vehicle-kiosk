@@ -1,4 +1,4 @@
-import { React, useState, useEffect, useRef } from "react";
+import { React, useState, Component } from "react";
 import {
   Box,
   Button,
@@ -9,22 +9,21 @@ import {
   MenuItem,
   TextField,
 } from "@mui/material";
-import { useReactToPrint } from "react-to-print";
-import { YuriksStates } from "./yuriksStates";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import logo from "../image/logo.svg";
 import flash from "../image/flash.png";
 import patch from "../image/patch.png";
+import { ComponentToPrint } from "./print";
 import shark from "../image/shark.png";
 import { height } from "@mui/system";
-// import { makeStyles } from "@mui/styles";
+import ReactToPrint from "react-to-print";
 
-// const useStyles = makeStyles({
-//   field: {
-//     marginTop: 20,
-//     marginBottom: 20,
-//   },
-// });
+const tabStyle = {
+  height: 500,
+  maxHeight: 300,
+  overflow: "scroll",
+  //backgroundColor: "blue"
+};
 
 export const Forms = () => {
   const date = new Date();
@@ -43,11 +42,52 @@ export const Forms = () => {
     model: "",
     date: today,
   });
+ 
   // date for printing on pa
 
   const reload = () => {
     window.location.reload();
   };
+
+  //print functionality
+  class ComponentToPrint extends Component {
+   render (){
+    return(
+        <div style={tabStyle}>
+          <div className="printElement1">
+            <div>{vehicle.first_name}</div>
+            <div>{vehicle.last_name}</div>
+            <div>{vehicle.plate}</div>
+            <div>{vehicle.drivers_license}</div>
+            <div>{vehicle.state}</div>
+            <div>{vehicle.make}</div>
+            <div>{vehicle.model}</div>
+          </div>
+          
+        </div>
+    )
+   }
+  }
+  
+  class Example extends Component{
+    render() {
+      return (    
+        <span>
+
+          <ComponentToPrint ref={(el) => (this.componentRef = el)} />
+          <ReactToPrint
+            trigger={() => <Button href="#">Print this out!</Button>}
+            content={() => this.componentRef}
+            bodyClass={"printElement1"}
+            
+            />
+            </span>
+       
+       
+      );
+    }
+    
+  }
 
   // posting vehicle and user info to the database
   const postUser = () => {
@@ -107,8 +147,8 @@ export const Forms = () => {
           src={patch}
           alt="Security Forces Logo"
         />
-        <>{today}</>
       </Box>
+      <>{today}</>
       <Box
         sx={{
           display: "grid",
@@ -116,7 +156,7 @@ export const Forms = () => {
           gap: 1,
         }}
       >
-        <Container className="Pass">
+        <Container className="Pass" >
           <form
             noValidate
             autoComplete="off"
@@ -240,7 +280,7 @@ export const Forms = () => {
 
               <TextField
                 error={failedRegister}
-                sx={{ width: 150, m: 1, width: "80%" }}
+                sx={{ boxShadow: 2, width: 150, m: 1, width: "80%" }}
                 onChange={(e) =>
                   setVehicle((prev) => {
                     return { ...prev, drivers_license: e.target.value };
@@ -263,10 +303,10 @@ export const Forms = () => {
               id="plate"
               label="Plate Number"
               name="Plate Number"
-              sx={{ boxShadow: 2, m: 1 }}
+              sx={{ boxShadow: 2, boxShadow: 2, m: 1 }}
             />
             <TextField
-              sx={{ width: 150, m: 1 }}
+              sx={{ boxShadow: 2, width: 150, m: 1 }}
               error={failedRegister}
               onChange={(e) =>
                 setVehicle((prev) => {
@@ -279,7 +319,7 @@ export const Forms = () => {
               name="make"
             />
             <TextField
-              sx={{ width: 150, m: 1 }}
+              sx={{ boxShadow: 2, width: 150, m: 1 }}
               error={failedRegister}
               onChange={(e) =>
                 setVehicle((prev) => {
@@ -291,8 +331,14 @@ export const Forms = () => {
               label="Model"
               name="model"
             />
-            <Button
-              sx={{ width: 150, m: 1 }}
+          </form>
+        </Container>
+
+        {/* <ComponentToPrint ref={componentRef} /> */}
+        {/* <ReactToPrint
+          trigger={() => { 
+             return <Button
+              sx={{ boxShadow: 2, width: 150, m: 1 }}
               variant="contained"
               onClick={() => {
                 postUser();
@@ -300,16 +346,15 @@ export const Forms = () => {
             >
               {" "}
               Print Pass{" "}
-            </Button>
-            <ReactToPrint
-              trigger={() => <a href="#">Print!</a>}
-              content={() => this.componentRef}
-              bodyClass={"printElement1"}
-            />
-            <ComponentToPrint ref={(el) => (this.componentRef = el)} />
-          </form>
-        </Container>
+            </Button>;
+          }}
+          content={ () => ('work')}
+          documentTitle="Vehicle Pass"
+          pageStyle="print"
+        /> */}
+        <Example/>
       </Box>
     </>
   );
 };
+
