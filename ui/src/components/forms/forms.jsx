@@ -12,6 +12,9 @@ import {
 import { YuriksStates } from "./yuriksStates";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import logo from "../image/logo.svg";
+import flash from "../image/flash.png";
+import patch from "../image/patch.png";
+import shark from "../image/shark.png";
 import { height } from "@mui/system";
 // import { makeStyles } from "@mui/styles";
 
@@ -92,9 +95,10 @@ export const Forms = () => {
           mb: 1,
         }}
       >
-        <h1> Inspection Gate Kiosk </h1>
-        <img src={logo} alt="Security Forces Logo" />
-        <>{today}</>
+        <img style={{height: '100px', margin: '10px'}} src={flash} alt="Security Forces Logo" />
+        <h1 style={{paddingTop: '2%'}}> Inspection Gate Kiosk </h1>
+        <img style={{height: '100px', margin: '10px'}} src={patch} alt="Security Forces Logo" />
+        <>{today}</>  
       </Box>
       <Box
         sx={{
@@ -116,6 +120,7 @@ export const Forms = () => {
             }}
           >
             <h2> Personal Information </h2>
+            <Box sx={{display: 'flex', justifyContent:'space-between'}}>
             <TextField
               required
               onChange={(e) =>
@@ -123,6 +128,7 @@ export const Forms = () => {
                   return { ...prev, first_name: e.target.value };
                 })
               }
+              fullWidth
               id="firstName"
               label="First Name"
               name="firstName"
@@ -137,6 +143,7 @@ export const Forms = () => {
                   return { ...prev, last_name: e.target.value };
                 })
               }
+              fullWidth
               required
               id="lastName"
               label="Last Name"
@@ -146,26 +153,15 @@ export const Forms = () => {
               // helperText="Please enter your first name"
               sx={{ boxShadow: 2, m: 1 }}
             />
+            </Box>
             <h2> Vehicle Information </h2>
-            <TextField
-              error={failedRegister}
-              onChange={(e) =>
-                setVehicle((prev) => {
-                  return { ...prev, plate: e.target.value };
-                })
-              }
-              required
-              id="plate"
-              label="Plate Number"
-              name="Plate Number"
-              sx={{ boxShadow: 2, m: 1 }}
-            />
+            <Box>
 
             <TextField
               error={failedRegister}
-              sx={{ boxShadow: 2, m: 1 }}
+              sx={{ boxShadow: 2, m: 1, width: '15%' }}
               variant="outlined"
-              fullWidth
+              
               required
               id="state"
               label="State"
@@ -178,6 +174,7 @@ export const Forms = () => {
                 });
               }}
             >
+
               <MenuItem value="AL">Alabama</MenuItem>
               <MenuItem value="AK">Alaska</MenuItem>
               <MenuItem value="AZ">Arizona</MenuItem>
@@ -237,16 +234,32 @@ export const Forms = () => {
 
             <TextField
               error={failedRegister}
-              sx={{ width: 150, m: 1 }}
+              
+              sx={{ width: 150, m: 1, width: '80%' }}
               onChange={(e) =>
                 setVehicle((prev) => {
                   return { ...prev, drivers_license: e.target.value };
                 })
               }
+              
               required
               id="dl"
               label="Driver's License Number"
               name="Driver's License Number"
+              />
+              </Box>
+            <TextField
+              error={failedRegister}
+              onChange={(e) =>
+                setVehicle((prev) => {
+                  return { ...prev, plate: e.target.value };
+                })
+              }
+              required
+              id="plate"
+              label="Plate Number"
+              name="Plate Number"
+              sx={{ boxShadow: 2, m: 1 }}
             />
             <TextField
               sx={{ width: 150, m: 1 }}
