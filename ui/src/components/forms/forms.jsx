@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useRef } from "react";
 import {
   Box,
   Button,
@@ -9,6 +9,7 @@ import {
   MenuItem,
   TextField,
 } from "@mui/material";
+import { useReactToPrint } from "react-to-print";
 import { YuriksStates } from "./yuriksStates";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import logo from "../image/logo.svg";
@@ -95,10 +96,18 @@ export const Forms = () => {
           mb: 1,
         }}
       >
-        <img style={{height: '100px', margin: '10px'}} src={flash} alt="Security Forces Logo" />
-        <h1 style={{paddingTop: '2%'}}> Inspection Gate Kiosk </h1>
-        <img style={{height: '100px', margin: '10px'}} src={patch} alt="Security Forces Logo" />
-        <>{today}</>  
+        <img
+          style={{ height: "100px", margin: "10px" }}
+          src={flash}
+          alt="Security Forces Logo"
+        />
+        <h1 style={{ paddingTop: "2%" }}> Inspection Gate Kiosk </h1>
+        <img
+          style={{ height: "100px", margin: "10px" }}
+          src={patch}
+          alt="Security Forces Logo"
+        />
+        <>{today}</>
       </Box>
       <Box
         sx={{
@@ -107,7 +116,7 @@ export const Forms = () => {
           gap: 1,
         }}
       >
-        <Container>
+        <Container className="Pass">
           <form
             noValidate
             autoComplete="off"
@@ -120,134 +129,129 @@ export const Forms = () => {
             }}
           >
             <h2> Personal Information </h2>
-            <Box sx={{display: 'flex', justifyContent:'space-between'}}>
-            <TextField
-              required
-              onChange={(e) =>
-                setVehicle((prev) => {
-                  return { ...prev, first_name: e.target.value };
-                })
-              }
-              fullWidth
-              id="firstName"
-              label="First Name"
-              name="firstName"
-              autoComplete="firstName"
-              error={failedRegister}
-              // helperText="Please enter your first name"
-              sx={{ boxShadow: 2, m: 1 }}
-            />
-            <TextField
-              onChange={(e) =>
-                setVehicle((prev) => {
-                  return { ...prev, last_name: e.target.value };
-                })
-              }
-              fullWidth
-              required
-              id="lastName"
-              label="Last Name"
-              name="lastName"
-              autoComplete="lastName"
-              error={failedRegister}
-              // helperText="Please enter your first name"
-              sx={{ boxShadow: 2, m: 1 }}
-            />
+            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+              <TextField
+                required
+                onChange={(e) =>
+                  setVehicle((prev) => {
+                    return { ...prev, first_name: e.target.value };
+                  })
+                }
+                fullWidth
+                id="firstName"
+                label="First Name"
+                name="firstName"
+                autoComplete="firstName"
+                error={failedRegister}
+                // helperText="Please enter your first name"
+                sx={{ boxShadow: 2, m: 1 }}
+              />
+              <TextField
+                onChange={(e) =>
+                  setVehicle((prev) => {
+                    return { ...prev, last_name: e.target.value };
+                  })
+                }
+                fullWidth
+                required
+                id="lastName"
+                label="Last Name"
+                name="lastName"
+                autoComplete="lastName"
+                error={failedRegister}
+                // helperText="Please enter your first name"
+                sx={{ boxShadow: 2, m: 1 }}
+              />
             </Box>
             <h2> Vehicle Information </h2>
             <Box>
+              <TextField
+                error={failedRegister}
+                sx={{ boxShadow: 2, m: 1, width: "15%" }}
+                variant="outlined"
+                required
+                id="state"
+                label="State"
+                name="state"
+                defaultValue=""
+                select
+                onChange={(e) => {
+                  setVehicle((prev) => {
+                    return { ...prev, state: e.target.value };
+                  });
+                }}
+              >
+                <MenuItem value="AL">Alabama</MenuItem>
+                <MenuItem value="AK">Alaska</MenuItem>
+                <MenuItem value="AZ">Arizona</MenuItem>
+                <MenuItem value="AR">Arkansas</MenuItem>
+                <MenuItem value="CA">California</MenuItem>
+                <MenuItem value="CO">Colorado</MenuItem>
+                <MenuItem value="CT">Connecticut</MenuItem>
+                <MenuItem value="DE">Delaware</MenuItem>
+                <MenuItem value="DC">District of Columbia</MenuItem>
+                <MenuItem value="FL">Florida</MenuItem>
+                <MenuItem value="GA">Georgia</MenuItem>
+                <MenuItem value="GU">Guam</MenuItem>
+                <MenuItem value="HI">Hawaii</MenuItem>
+                <MenuItem value="ID">Idaho</MenuItem>
+                <MenuItem value="IL">Illinois</MenuItem>
+                <MenuItem value="IN">Indiana</MenuItem>
+                <MenuItem value="IA">Iowa</MenuItem>
+                <MenuItem value="KS">Kansas</MenuItem>
+                <MenuItem value="KY">Kentucky</MenuItem>
+                <MenuItem value="LA">Louisiana</MenuItem>
+                <MenuItem value="ME">Maine</MenuItem>
+                <MenuItem value="MD">Maryland</MenuItem>
+                <MenuItem value="MA">Massachusetts</MenuItem>
+                <MenuItem value="MI">Michigan</MenuItem>
+                <MenuItem value="MN">Minnesota</MenuItem>
+                <MenuItem value="MS">Mississippi</MenuItem>
+                <MenuItem value="MO">Missouri</MenuItem>
+                <MenuItem value="MT">Montana</MenuItem>
+                <MenuItem value="NE">Nebraska</MenuItem>
+                <MenuItem value="NV">Nevada</MenuItem>
+                <MenuItem value="NH">New Hampshire</MenuItem>
+                <MenuItem value="NJ">New Jersey</MenuItem>
+                <MenuItem value="NM">New Mexico</MenuItem>
+                <MenuItem value="NY">New York</MenuItem>
+                <MenuItem value="NC">North Carolina</MenuItem>
+                <MenuItem value="ND">North Dakota</MenuItem>
+                <MenuItem value="OH">Ohio</MenuItem>
+                <MenuItem value="OK">Oklahoma</MenuItem>
+                <MenuItem value="OR">Oregon</MenuItem>
+                <MenuItem value="PA">Pennsylvania</MenuItem>
+                <MenuItem value="PR">Puerto Rico</MenuItem>
+                <MenuItem value="RI">Rhode Island</MenuItem>
+                <MenuItem value="SC">South Carolina</MenuItem>
+                <MenuItem value="SD">South Dakota</MenuItem>
+                <MenuItem value="TN">Tennessee</MenuItem>
+                <MenuItem value="TX">Texas</MenuItem>
+                <MenuItem value="UT">Utah</MenuItem>
+                <MenuItem value="VT">Vermont</MenuItem>
+                <MenuItem value="VA">Virginia</MenuItem>
+                <MenuItem value="WA">Washington</MenuItem>
+                <MenuItem value="WV">West Virginia</MenuItem>
+                <MenuItem value="WI">Wisconsin</MenuItem>
+                <MenuItem value="WY">Wyoming</MenuItem>
+                <MenuItem value="AA">Armed Forces Americas</MenuItem>
+                <MenuItem value="other">Other</MenuItem>
+              </TextField>
 
-            <TextField
-              error={failedRegister}
-              sx={{ boxShadow: 2, m: 1, width: '15%' }}
-              variant="outlined"
-              
-              required
-              id="state"
-              label="State"
-              name="state"
-              defaultValue=""
-              select
-              onChange={(e) => {
-                setVehicle((prev) => {
-                  return { ...prev, state: e.target.value };
-                });
-              }}
-            >
-
-              <MenuItem value="AL">Alabama</MenuItem>
-              <MenuItem value="AK">Alaska</MenuItem>
-              <MenuItem value="AZ">Arizona</MenuItem>
-              <MenuItem value="AR">Arkansas</MenuItem>
-              <MenuItem value="CA">California</MenuItem>
-              <MenuItem value="CO">Colorado</MenuItem>
-              <MenuItem value="CT">Connecticut</MenuItem>
-              <MenuItem value="DE">Delaware</MenuItem>
-              <MenuItem value="DC">District of Columbia</MenuItem>
-              <MenuItem value="FL">Florida</MenuItem>
-              <MenuItem value="GA">Georgia</MenuItem>
-              <MenuItem value="GU">Guam</MenuItem>
-              <MenuItem value="HI">Hawaii</MenuItem>
-              <MenuItem value="ID">Idaho</MenuItem>
-              <MenuItem value="IL">Illinois</MenuItem>
-              <MenuItem value="IN">Indiana</MenuItem>
-              <MenuItem value="IA">Iowa</MenuItem>
-              <MenuItem value="KS">Kansas</MenuItem>
-              <MenuItem value="KY">Kentucky</MenuItem>
-              <MenuItem value="LA">Louisiana</MenuItem>
-              <MenuItem value="ME">Maine</MenuItem>
-              <MenuItem value="MD">Maryland</MenuItem>
-              <MenuItem value="MA">Massachusetts</MenuItem>
-              <MenuItem value="MI">Michigan</MenuItem>
-              <MenuItem value="MN">Minnesota</MenuItem>
-              <MenuItem value="MS">Mississippi</MenuItem>
-              <MenuItem value="MO">Missouri</MenuItem>
-              <MenuItem value="MT">Montana</MenuItem>
-              <MenuItem value="NE">Nebraska</MenuItem>
-              <MenuItem value="NV">Nevada</MenuItem>
-              <MenuItem value="NH">New Hampshire</MenuItem>
-              <MenuItem value="NJ">New Jersey</MenuItem>
-              <MenuItem value="NM">New Mexico</MenuItem>
-              <MenuItem value="NY">New York</MenuItem>
-              <MenuItem value="NC">North Carolina</MenuItem>
-              <MenuItem value="ND">North Dakota</MenuItem>
-              <MenuItem value="OH">Ohio</MenuItem>
-              <MenuItem value="OK">Oklahoma</MenuItem>
-              <MenuItem value="OR">Oregon</MenuItem>
-              <MenuItem value="PA">Pennsylvania</MenuItem>
-              <MenuItem value="PR">Puerto Rico</MenuItem>
-              <MenuItem value="RI">Rhode Island</MenuItem>
-              <MenuItem value="SC">South Carolina</MenuItem>
-              <MenuItem value="SD">South Dakota</MenuItem>
-              <MenuItem value="TN">Tennessee</MenuItem>
-              <MenuItem value="TX">Texas</MenuItem>
-              <MenuItem value="UT">Utah</MenuItem>
-              <MenuItem value="VT">Vermont</MenuItem>
-              <MenuItem value="VA">Virginia</MenuItem>
-              <MenuItem value="WA">Washington</MenuItem>
-              <MenuItem value="WV">West Virginia</MenuItem>
-              <MenuItem value="WI">Wisconsin</MenuItem>
-              <MenuItem value="WY">Wyoming</MenuItem>
-              <MenuItem value="AA">Armed Forces Americas</MenuItem>
-              <MenuItem value="other">Other</MenuItem>
-            </TextField>
-
-            <TextField
-              error={failedRegister}
-              
-              sx={{ width: 150, m: 1, width: '80%' }}
-              onChange={(e) =>
-                setVehicle((prev) => {
-                  return { ...prev, drivers_license: e.target.value };
-                })
-              }
-              
-              required
-              id="dl"
-              label="Driver's License Number"
-              name="Driver's License Number"
+              <TextField
+                error={failedRegister}
+                sx={{ width: 150, m: 1, width: "80%" }}
+                onChange={(e) =>
+                  setVehicle((prev) => {
+                    return { ...prev, drivers_license: e.target.value };
+                  })
+                }
+                required
+                id="dl"
+                label="Driver's License Number"
+                name="Driver's License Number"
               />
-              </Box>
+            </Box>
             <TextField
               error={failedRegister}
               onChange={(e) =>
@@ -297,6 +301,12 @@ export const Forms = () => {
               {" "}
               Print Pass{" "}
             </Button>
+            <ReactToPrint
+              trigger={() => <a href="#">Print!</a>}
+              content={() => this.componentRef}
+              bodyClass={"printElement1"}
+            />
+            <ComponentToPrint ref={(el) => (this.componentRef = el)} />
           </form>
         </Container>
       </Box>
