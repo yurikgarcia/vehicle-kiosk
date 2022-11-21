@@ -1,8 +1,8 @@
 import React, { useState, useRef } from "react";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import Modal from "@mui/material/Modal";
+import { Alert, Box, Button, Typography, Modal, Stack } from "@mui/material/";
+// import Button from "@mui/material/Button";
+// import Typography from "@mui/material/Typography";
+// import Modal from "@mui/material/Modal";
 import ReactToPrint from "react-to-print";
 import { useReactToPrint } from "react-to-print";
 import flash from "../image/flash.png";
@@ -23,7 +23,7 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: '75%',
+  width: "75%",
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
@@ -34,13 +34,17 @@ export default function PrintModal(props) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [flag, setFlag] = useState(false);
   const componentRef = useRef();
+  const vehicle = props.element.vehicle;
+  const setFailedRegister = props.element.setFailedRegister;
+  const reload = props.element.reload;
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
+    onAfterPrint: () => reload(),
   });
 
-  const vehicle = props.element;
-  console.log("FROM PRINT MODAL", vehicle);
+  // console.log("FROM PRINT MODAL", props);
 
   const postUser = () => {
     console.log("posting vehicle");
@@ -65,9 +69,9 @@ export default function PrintModal(props) {
   };
 
   const ComponentToPrint = React.forwardRef((props, ref) => {
-  //   const date = new Date();
-  // const today =
-  //   date.toISOString().slice(0, 10) + " " + date.toTimeString().slice(0, 5);
+    //   const date = new Date();
+    // const today =
+    //   date.toISOString().slice(0, 10) + " " + date.toTimeString().slice(0, 5);
     return (
       <Box ref={ref} sx={{ overflow: "hidden" }}>
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
@@ -88,28 +92,37 @@ export default function PrintModal(props) {
           sx={{ display: "flex", flexDirection: "column" }}
         >
           <Box sx={{ display: "flex", flexDirection: "row" }}>
-
-          <Typography> First Name: {vehicle.first_name}</Typography>
-          <Typography sx={{pl: 5}}> Last Name: {vehicle.last_name}</Typography>
+            <Typography> First Name: {vehicle.first_name}</Typography>
+            <Typography sx={{ pl: 5 }}>
+              {" "}
+              Last Name: {vehicle.last_name}
+            </Typography>
           </Box>
           <Box sx={{ display: "flex", flexDirection: "row" }}>
-            
-            <Typography> Drivers License: {vehicle.state} {vehicle.drivers_license}</Typography>
+            <Typography>
+              {" "}
+              Drivers License: {vehicle.state} {vehicle.drivers_license}
+            </Typography>
           </Box>
           <Box
             className="printElement1"
             sx={{ display: "flex", justifyContent: "space-between" }}
           >
-          <Typography > Vehicle Plate: {vehicle.plate}</Typography>
-          <Typography > Make: {vehicle.make}</Typography>
-          <Typography > Model: {vehicle.model}</Typography>
-
+            <Typography> Vehicle Plate: {vehicle.plate}</Typography>
+            <Typography> Make: {vehicle.make}</Typography>
+            <Typography> Model: {vehicle.model}</Typography>
           </Box>
           <Typography>{vehicle.date}</Typography>
         </Box>
       </Box>
     );
   });
+
+  const printAndClose = async () => {
+    postUser();
+    handleClose();
+    handlePrint();
+  };
 
   const fillOutFields = () => {
     if (
@@ -121,6 +134,7 @@ export default function PrintModal(props) {
       vehicle.make === "" ||
       vehicle.model === ""
     ) {
+      setFailedRegister(true);
       alert("Please fill out all fields.");
       return;
     }
@@ -129,15 +143,18 @@ export default function PrintModal(props) {
 
   return (
     <div>
+      <Box sx={{display: "flex", justifyContent: "center", alignItems: "center"}}>
       <Button
-        sx={{ boxShadow: 2, width: 150, m: 1 }}
+        sx={{ boxShadow: 2, width: 150, m: 1}}
         variant="contained"
         onClick={() => {
           fillOutFields();
         }}
-      >
+        >
         Verify & Print
       </Button>
+
+        </Box>
       <Modal
         open={open}
         onClose={handleClose}
@@ -157,8 +174,10 @@ export default function PrintModal(props) {
             sx={{ boxShadow: 2, width: 150, m: 1 }}
             variant="contained"
             onClick={() => {
-              postUser();
-              handlePrint();
+              // postUser();
+              // handlePrint();
+              // reload();
+              printAndClose();
             }}
           >
             {" "}

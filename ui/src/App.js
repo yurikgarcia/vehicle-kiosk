@@ -4,6 +4,7 @@ import { Login } from "./components/login/login";
 import { Forms } from "./components/forms/forms";
 import "./App.css";
 import { Navbar } from "./components/navbar";
+import { Data } from "./components/data/data";
 
 
 
@@ -14,6 +15,8 @@ export const App = () => {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/vehicle" element={<Forms />} />
+        <Route path="/data" element={<Data />} />
+        <Route path="*" element={<Forms />} />
       </Routes>
     </Router>
   );

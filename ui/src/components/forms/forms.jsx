@@ -1,5 +1,6 @@
 import { React, useState, useRef } from "react";
 import {
+  Alert,
   Box,
   Button,
   Container,
@@ -16,9 +17,8 @@ import flash from "../image/flash.png";
 import patch from "../image/patch.png";
 import shark from "../image/shark.png";
 import { height } from "@mui/system";
-import  PrintModal   from "./print_copy";
+import PrintModal from "./print_copy";
 import { renderMatches } from "react-router";
-
 
 const tabStyle = {
   height: 500,
@@ -45,22 +45,9 @@ export const Forms = () => {
     date: today,
   });
 
-
   const reload = () => {
     window.location.reload();
   };
-
-
-
-
-  
-  
-
-
-
-  
-
-  
 
   // posting vehicle and user info to the database
   const postUser = () => {
@@ -80,7 +67,7 @@ export const Forms = () => {
       alert("Please fill out all fields.");
       return;
     }
-   
+
     fetch("http://localhost:8080/api", {
       method: "POST",
       credentials: "include",
@@ -119,12 +106,10 @@ export const Forms = () => {
           src={patch}
           alt="Security Forces Logo"
         />
-      </Box >
-
-      <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2, }}> 
-         
       </Box>
-      
+
+      <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}></Box>
+
       <Box
         sx={{
           display: "grid",
@@ -132,7 +117,7 @@ export const Forms = () => {
           gap: 1,
         }}
       >
-        <Container className="Pass" >
+        <Container className="Pass">
           <form
             noValidate
             autoComplete="off"
@@ -310,8 +295,7 @@ export const Forms = () => {
           </form>
         </Container>
 
-       
-         {/* <Button
+        {/* <Button
               sx={{ boxShadow: 2, width: 150, m: 1 }}
               variant="contained"
               onClick={() =>  <PrintModal element={vehicle}/> 
@@ -323,12 +307,8 @@ export const Forms = () => {
               Veryify Information & Print{" "}
             </Button>
              */}
-            <PrintModal element={ vehicle }/> 
-            
-       
-       
+        <PrintModal element={{ vehicle, setFailedRegister, reload }} />
       </Box>
     </>
   );
 };
-
