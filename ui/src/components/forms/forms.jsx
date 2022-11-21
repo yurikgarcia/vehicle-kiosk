@@ -1,4 +1,4 @@
-import { React, useState, Component } from "react";
+import { React, useState, useRef } from "react";
 import {
   Box,
   Button,
@@ -7,16 +7,18 @@ import {
   FormHelperText,
   InputLabel,
   MenuItem,
+  Typography,
   TextField,
 } from "@mui/material";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import logo from "../image/logo.svg";
 import flash from "../image/flash.png";
 import patch from "../image/patch.png";
-import { ComponentToPrint } from "./print";
 import shark from "../image/shark.png";
 import { height } from "@mui/system";
-import ReactToPrint from "react-to-print";
+import  PrintModal   from "./print_copy";
+import { renderMatches } from "react-router";
+
 
 const tabStyle = {
   height: 500,
@@ -42,52 +44,23 @@ export const Forms = () => {
     model: "",
     date: today,
   });
- 
-  // date for printing on pa
+
 
   const reload = () => {
     window.location.reload();
   };
 
-  //print functionality
-  class ComponentToPrint extends Component {
-   render (){
-    return(
-        <div style={tabStyle}>
-          <div className="printElement1">
-            <div>{vehicle.first_name}</div>
-            <div>{vehicle.last_name}</div>
-            <div>{vehicle.plate}</div>
-            <div>{vehicle.drivers_license}</div>
-            <div>{vehicle.state}</div>
-            <div>{vehicle.make}</div>
-            <div>{vehicle.model}</div>
-          </div>
-          
-        </div>
-    )
-   }
-  }
-  
-  class Example extends Component{
-    render() {
-      return (    
-        <span>
 
-          <ComponentToPrint ref={(el) => (this.componentRef = el)} />
-          <ReactToPrint
-            trigger={() => <Button href="#">Print this out!</Button>}
-            content={() => this.componentRef}
-            bodyClass={"printElement1"}
-            
-            />
-            </span>
-       
-       
-      );
-    }
-    
-  }
+
+
+  
+  
+
+
+
+  
+
+  
 
   // posting vehicle and user info to the database
   const postUser = () => {
@@ -107,8 +80,7 @@ export const Forms = () => {
       alert("Please fill out all fields.");
       return;
     }
-    console.log(vehicle.drivers_license);
-    console.log(vehicle.first_name);
+   
     fetch("http://localhost:8080/api", {
       method: "POST",
       credentials: "include",
@@ -137,7 +109,7 @@ export const Forms = () => {
         }}
       >
         <img
-          style={{ height: "100px", margin: "10px" }}
+          style={{ width: "100px", margin: "10px" }}
           src={flash}
           alt="Security Forces Logo"
         />
@@ -147,8 +119,12 @@ export const Forms = () => {
           src={patch}
           alt="Security Forces Logo"
         />
+      </Box >
+
+      <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2, }}> 
+         
       </Box>
-      <>{today}</>
+      
       <Box
         sx={{
           display: "grid",
@@ -334,25 +310,23 @@ export const Forms = () => {
           </form>
         </Container>
 
-        {/* <ComponentToPrint ref={componentRef} /> */}
-        {/* <ReactToPrint
-          trigger={() => { 
-             return <Button
+       
+         {/* <Button
               sx={{ boxShadow: 2, width: 150, m: 1 }}
               variant="contained"
-              onClick={() => {
-                postUser();
-              }}
+              onClick={() =>  <PrintModal element={vehicle}/> 
+              }
+              
+            
             >
               {" "}
-              Print Pass{" "}
-            </Button>;
-          }}
-          content={ () => ('work')}
-          documentTitle="Vehicle Pass"
-          pageStyle="print"
-        /> */}
-        <Example/>
+              Veryify Information & Print{" "}
+            </Button>
+             */}
+            <PrintModal element={ vehicle }/> 
+            
+       
+       
       </Box>
     </>
   );
