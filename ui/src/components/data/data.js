@@ -1,10 +1,21 @@
-import React from "react";
+import { BarGraph } from "./barGraph";
+import {
+    Box,
+    Button,
+    Container,
+    Typography, 
+  } from "@mui/material";
 
 
 export const Data = () => {
-    return(
-        <div>
-            <h1>Data</h1>
-        </div>
-    )
+return (
+
+    
+    <Box sx={{width: '50%'}}>
+
+    <BarGraph />
+   
+    </Box>
+
+)
 }

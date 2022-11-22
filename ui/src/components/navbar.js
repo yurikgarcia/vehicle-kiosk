@@ -21,7 +21,7 @@ export const Navbar = () => {
               variant="h6"
               component="div"
             >
-              Search Indivdual
+              History Log
             </Button>
             <Button
               onClick={() => navigate("/data")}
