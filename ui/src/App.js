@@ -4,7 +4,7 @@ import { Login } from "./components/login/login";
 import { Forms } from "./components/forms/forms";
 import "./App.css";
 import { Navbar } from "./components/navbar";
-import { Data } from "./components/data/data";
+import  { Data }  from "./components/data/data";
 
 
 
