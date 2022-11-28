@@ -3,25 +3,47 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const login = async (req, res) => {
-  const { username, password } = req.body;
-  const user = await client.user.findFirst({
-    where: {
-      username,
-      password,
-    },
-  });
-  if (!user) {
-    return res.status(400).json({ message: "Invalid username or password" });
+  const { user_name, password } = req.body;
+  console.log(req.body);
+  try {
+    const user = await client.query(
+      `SELECT * FROM users WHERE user_name = '${user_name}'`
+    );
+   
+    if (!user) {
+      return res.status(400).json({ message: "Invalid credentials" });
+    }
+     const isMatch = await bcrypt.compare(password, user.rows[0].password);
+     console.log(isMatch)
+    if (isMatch) {
+      const token = jwt.sign({ id: user.rows[0].id }, process.env.JWT_SECRET, {
+        expiresIn: process.env.JWT_LIFETIME,
+      });
+        console.log(user.rows[0]);
+      res.status(200).json({
+        token,
+        user: {
+          id: user.rows[0].id,
+          user_name: user.rows[0].user_name,
+          admin: user.rows[0].admin,
+        },
+      });
+    } else {
+        res.status(400).json({ message: "Invalid credentials" });
+
+    }
+    // res.status(200).res.json({ message: "success" });
+  } catch (err) {
+    res.status(500).send(err);
   }
-  res.json({ message: "success" });
 };
 
 const register = async (req, res) => {
-    if (req.body.admin === undefined) {
-        req.body.admin = false;
-    }
-    const password = await bcrypt.hash(req.body.password, 10);
-    const { user_name, admin } = req.body;
+  if (req.body.admin === undefined) {
+    req.body.admin = false;
+  }
+  const password = await bcrypt.hash(req.body.password, 10);
+  const { user_name, admin } = req.body;
   console.log(password);
   try {
     if (!user_name || !password) {
@@ -31,8 +53,8 @@ const register = async (req, res) => {
     const user = await client.query(
       `INSERT INTO users (user_name, password, admin) VALUES ('${user_name}', '${password}', '${admin}')`
     );
-        console.log({user_name, admin})
-    res.status(200).send({user_name, admin});
+    console.log({ user_name, admin });
+    res.status(200).send({ user_name, admin });
   } catch (err) {
     console.log(err);
     res.status(500).send(err);

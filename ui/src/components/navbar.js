@@ -29,7 +29,7 @@ export const Navbar = () => {
               component="div"
               sx={{}}
             >
-              Data
+              Analytics
             </Button>
             <Button
               onClick={() => navigate("/about")}
@@ -52,7 +52,11 @@ export const Navbar = () => {
               />
           </Box>
 
-          <Button color="inherit">Login</Button>
+          <Button 
+          onClick={() => navigate("/login")}
+          color="inherit"
+          >Login</Button>
+
         </Toolbar>
       </AppBar>
     </Box>

@@ -1,43 +1,59 @@
-import React, { useState, useEffect } from 'react';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Container from '@mui/material/Container';
-
-
-
-
+import React, { useState, useEffect, useContext } from "react";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Container from "@mui/material/Container";
+import flash from "../image/flash.png";
+import { VehicleContext } from "../VehicleContext";
 
 export const Login = () => {
+  const { API } = useContext(VehicleContext);
+  // console.log(API);
   const [login, setLogin] = useState({
-    username: '',
-    password: '',
-  })
+    user_name: "",
+    password: "",
+  });
+
+  const postLogin = () => {
+    fetch(`${API}/users/login`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(login),
+    }).then((res) => {
+      console.log(res.status);
+      if (res.status === 200) {
+        return res.json();
+      }
+    });
+  };
 
   return (
     <Box
       sx={{
-        position: 'absolute',
+        position: "absolute",
         left: 0,
         top: 0,
-        width: '100vw',
-        height: '100vh',
-        backgroundColor: '#212121',
+        width: "100vw",
+        height: "100vh",
+        backgroundColor: "#1769aa",
       }}
     >
-      <Container component='main' maxWidth='xs'>
+      <Container component="main" maxWidth="xs">
         <Box
           sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
+            marginTop: 10,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
             gap: 3,
             //backgroundColor: '#212121',
           }}
         >
           <Box
-            sx={{ backgroundColor: '#212121', borderRadius: '20px', pl: 1.5 }}
+            sx={{ backgroundColor: "#212121", borderRadius: "20px", pl: 1.5 }}
           >
             {/* <img src={logo} alt='logo' style={{ width: '20rem' }} /> */}
           </Box>
@@ -54,44 +70,50 @@ export const Login = () => {
             </span>
           )} */}
           <Box
-            sx={{ backgroundColor: '#FAFAFF', borderRadius: 3, px: 4, py: 2 }}
+            sx={{ backgroundColor: "#FAFAFF", borderRadius: 3, px: 4, py: 4 }}
           >
+            <Box sx={{ display: "flex", justifyContent: "center", mb: 1 }}>
+              <img
+                style={{ width: "100px", margin: "10px" }}
+                src={flash}
+                alt="Security Forces Flash"
+              />
+            </Box>
+
             <TextField
               // error={failedLogin}
-              margin='normal'
+              margin="normal"
               required
               fullWidth
-              id='username'
-              label='User Name'
-              name='username'
-              autoComplete='Username'
+              id="user_name"
+              label="User Name"
+              name="user_name"
+              autoComplete="Username"
               autoFocus
-              onChange={e => {
-                setLogin(prev => {
-                  return { ...prev, username: e.target.value };
+              onChange={(e) => {
+                setLogin((prev) => {
+                  return { ...prev, user_name: e.target.value };
                 });
-                
               }}
             />
             <TextField
               // error={failedLogin}
-              margin='normal'
+              margin="normal"
               required
               fullWidth
-              name='password'
-              label='Password'
-              type='password'
-              id='password'
-              autoComplete='current-password'
-              onChange={e => {
-                setLogin(prev => {
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              onChange={(e) => {
+                setLogin((prev) => {
                   return { ...prev, password: e.target.value };
                 });
               }}
-              onKeyPress={event => {
-                if (event.key === 'Enter') {
+              onKeyPress={(event) => {
+                if (event.key === "Enter") {
                   // postLogin();
-
                 }
               }}
             />
@@ -99,34 +121,33 @@ export const Login = () => {
 
           <Button
             fullWidth
-            variant='contained'
-            color='secondary'
-            size='medium'
+            variant="contained"
+            color="primary"
+            size="medium"
             sx={{
-              borderRadius: '30px',
+              borderRadius: "30px",
               width: 200,
             }}
-            onClick={() => console.log(login)}
+            onClick={() => postLogin()}
           >
             Login
           </Button>
-          <Button
+          {/* <Button
             fullWidth
-            variant='contained'
-            color='secondary'
-            size='medium'
+            variant="contained"
+            color="primary"
+            size="medium"
             sx={{
-              borderRadius: '30px',
+              borderRadius: "30px",
               width: 200,
-              display: 'flex',
-              justifyContent: 'center',
+              display: "flex",
+              justifyContent: "center",
             }}
             // onClick={() => navigate('/signup')}
           >
-            Create Account
-          </Button>
+            Login as Guest 
+          </Button> */}
 
-          
           {/* {!apiRes.ok ? (
             <Box sx={{ m: 2, width: '100%' }}>
               <Typography variant='h5' component='h5' sx={{ color: 'white' }}>
@@ -138,5 +159,5 @@ export const Login = () => {
         </Box>
       </Container>
     </Box>
-  )
-}
+  );
+};

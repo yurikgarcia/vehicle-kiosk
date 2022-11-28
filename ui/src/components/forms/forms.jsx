@@ -130,7 +130,7 @@ export const Forms = () => {
             }}
           >
             <h2> Personal Information </h2>
-            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Box sx={{ display: "flex", justifyContent: "space-between", width: '98.3%' }}>
               <TextField
                 required
                 onChange={(e) =>
@@ -164,8 +164,7 @@ export const Forms = () => {
                 sx={{ boxShadow: 2, m: 1 }}
               />
             </Box>
-            <h2> Vehicle Information </h2>
-            <Box>
+            <Box >
               <TextField
                 error={failedRegister}
                 sx={{ boxShadow: 2, m: 1, width: "15%" }}
@@ -253,6 +252,8 @@ export const Forms = () => {
                 name="Driver's License Number"
               />
             </Box>
+            <h2> Vehicle Information </h2>
+            <Box sx={{ display: "flex", justifyContent: "space-between", width: '100%' }}>
             <TextField
               error={failedRegister}
               onChange={(e) =>
@@ -264,10 +265,10 @@ export const Forms = () => {
               id="plate"
               label="Plate Number"
               name="Plate Number"
-              sx={{ boxShadow: 2, boxShadow: 2, m: 1 }}
+              sx={{ boxShadow: 2, m: 1 , width: '100%'}}
             />
             <TextField
-              sx={{ boxShadow: 2, width: 150, m: 1 }}
+              sx={{ boxShadow: 2, width: 150, m: 1 , width: '100%'}}
               error={failedRegister}
               onChange={(e) =>
                 setVehicle((prev) => {
@@ -280,7 +281,7 @@ export const Forms = () => {
               name="make"
             />
             <TextField
-              sx={{ boxShadow: 2, width: 150, m: 1 }}
+              sx={{ boxShadow: 2, width: 150, m: 1 , width: '100%'}}
               error={failedRegister}
               onChange={(e) =>
                 setVehicle((prev) => {
@@ -292,6 +293,7 @@ export const Forms = () => {
               label="Model"
               name="model"
             />
+          </Box>
           </form>
         </Container>
 
