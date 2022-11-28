@@ -12,6 +12,8 @@ const getAllVehicles = async (req, res) => {
   }
 };
 
+//User Admin
+
 //insert new vehicle into db
 
 const addVehicle = async (req, res) => {

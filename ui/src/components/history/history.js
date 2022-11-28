@@ -10,10 +10,16 @@ export const History = () => {
   // const [visitorsDetails, setVisitorsDetails] = useState([]);
 
  
-  console.log(visitorDetails);
+  // console.log(visitorDetails);
 
   const columns = [
     // { field: 'id', headerName: 'ID', width: 90 },
+    {
+      field: "date",
+      headerName: "Date",
+      width: 150,
+
+    },
     {
       field: 'firstName',
       headerName: 'First name',
@@ -77,6 +83,7 @@ export const History = () => {
   const rows = [];
   visitorDetails.map((visitor) => {
     rows.push({
+      date: visitor.date.slice(0, 10),
       id: visitor.id,
       lastName: visitor.last_name,
       firstName: visitor.first_name,
