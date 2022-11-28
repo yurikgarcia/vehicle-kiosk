@@ -1,5 +1,7 @@
 const client = require("../db/client");
 
+
+//get all vehicle info from db
 const getAllVehicles = async (req, res) => {
   try {
     const all = await client.query("SELECT * FROM sfs45_cape");
@@ -9,6 +11,8 @@ const getAllVehicles = async (req, res) => {
     res.status(500).send(err);
   }
 };
+
+//insert new vehicle into db
 
 const addVehicle = async (req, res) => {
     const vehicle = {

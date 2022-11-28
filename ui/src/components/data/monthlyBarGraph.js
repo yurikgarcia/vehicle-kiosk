@@ -1,56 +1,41 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import ReactApexChart from "react-apexcharts";
 
-// export const Data = () => {
-//     return(
-//         <div>
-//             <h1>Data</h1>
-//         </div>
-//     )
-// }
-
-export const BarGraph = () => {
-  const [vehicleData, setVehicleData] = useState([]);
-
-  useEffect(() => {
-    fetch("http://localhost:8080/api", {
-      method: "GET",
-      credentials: "include",
-    })
-      .then((res) => res.json())
-      .then((data) => setVehicleData(data))
-      .catch((err) => console.log(err));
-  }, []);
+export const MonthlyBarGraph = (props) => {
+  const vehicleData = props.element.visitorDetails;
+  const today = props.element.today;
+  
 
   const combineDates = [];
   const numberOFVehicles = [];
 
   const date = vehicleData.map((data) => {
-    const newDay = data.date.slice(0, 10);
+    const newDay = data.date.slice(0, 7);
     if (!combineDates.includes(newDay)) {
       combineDates.push(newDay);
     }
+    
     return;
   });
 
-  for (let i = 0; i < combineDates.length; i++) {
-    let count = 0;
-    for (let j = 0; j < vehicleData.length; j++) {
-      if (combineDates[i] === vehicleData[j].date.slice(0, 10)) {
-        count++;
+  useMemo(() => {
+    for (let i = 0; i < combineDates.length; i++) {
+      let count = 0;
+      for (let j = 0; j < vehicleData.length; j++) {
+        if (combineDates[i] === vehicleData[j].date.slice(0, 7)) {
+          count++;
+        }
       }
+      numberOFVehicles.push(count);
     }
-    numberOFVehicles.push(count);
-  }
-
-  console.log(numberOFVehicles);
+  });
 
   const chartData = {
     chart: {
       type: "line",
       id: "apexchart-example",
-    //   width: '25%',
-    //   height: '25%'
+      // width: '25%',
+      // height: '25%'
       //   foreColor: theme.palette.primary.main
     },
     xaxis: {
@@ -70,8 +55,7 @@ export const BarGraph = () => {
         // colorStops: []
       },
     },
-  
- 
+
     legend: {
       // position: '',
       width: 400,

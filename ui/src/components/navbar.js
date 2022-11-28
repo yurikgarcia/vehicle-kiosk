@@ -17,7 +17,7 @@ export const Navbar = () => {
         <Toolbar sx={{ width: "100%" }}>
           <Box sx={{ width: "45%" }}>
             <Button
-              onClick={() => navigate("/???")}
+              onClick={() => navigate("/history")}
               variant="h6"
               component="div"
             >

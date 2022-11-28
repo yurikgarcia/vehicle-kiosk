@@ -22,6 +22,7 @@ const corsOptions = {
   },
 };
 
+//DataBase Connection initialization
 client
   .connect()
   .then(() => console.log("Connected to database"))
