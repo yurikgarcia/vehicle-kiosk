@@ -5,6 +5,7 @@ const cors = require("cors");
 const port = 8080;
 const vehicleRoutes = require("./routes/vehicles");
 const client = require("./db/client");
+const auth = require("./middleware/authentication");
 // DB Connection
 
 const whitelist = ["http://localhost:3000"];

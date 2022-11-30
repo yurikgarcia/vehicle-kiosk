@@ -20,6 +20,7 @@ const login = async (req, res) => {
         expiresIn: process.env.JWT_LIFETIME,
       });
         console.log(user.rows[0]);
+        
       res.status(200).json({
         token,
         user: {

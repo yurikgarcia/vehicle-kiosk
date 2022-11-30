@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -7,12 +8,13 @@ import flash from "../image/flash.png";
 import { VehicleContext } from "../VehicleContext";
 
 export const Login = () => {
-  const { API } = useContext(VehicleContext);
+  const { API, setUser, setIsAuthenticated } = useContext(VehicleContext);
   // console.log(API);
   const [login, setLogin] = useState({
     user_name: "",
     password: "",
   });
+  const navigate = useNavigate();
 
   const postLogin = () => {
     fetch(`${API}/users/login`, {
@@ -20,15 +22,29 @@ export const Login = () => {
       credentials: "include",
       headers: {
         "Content-Type": "application/json",
+        
       },
       body: JSON.stringify(login),
-    }).then((res) => {
-      console.log(res.status);
-      if (res.status === 200) {
-        return res.json();
-      }
-    });
+    })
+      .then((res) => {
+        
+        if (res.status === 200) {
+          return res.json();
+        } else {
+          alert("You're an imposter!");
+        }
+      })
+      .then((data) => {
+        localStorage.setItem("user", 'Bearer ' + data.token);
+        localStorage.setItem('admin', data.user.admin)
+        console.log('sign in data', data);
+        setUser(data);
+        setIsAuthenticated(data.user.admin);
+      })
+      .then(navigate("/vehicles"));
   };
+
+
 
   return (
     <Box

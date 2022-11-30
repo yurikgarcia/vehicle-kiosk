@@ -33,4 +33,6 @@ UI Dependencies
 - npm i nodemon
 - npm i react-to-print 
 - npm i react-apexcharts
+-npm install --save sweetalert
+
  

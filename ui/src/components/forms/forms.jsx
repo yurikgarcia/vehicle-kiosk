@@ -1,6 +1,5 @@
 import { React, useState, useRef } from "react";
 import {
-  Alert,
   Box,
   Button,
   Container,
@@ -8,8 +7,11 @@ import {
   FormHelperText,
   InputLabel,
   MenuItem,
+  MuiAlert,
   Typography,
   TextField,
+  Snackbar,
+  Stack,
 } from "@mui/material";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import logo from "../image/logo.svg";
@@ -20,12 +22,14 @@ import { height } from "@mui/system";
 import PrintModal from "./print_copy";
 import { renderMatches } from "react-router";
 
+
 const tabStyle = {
   height: 500,
   maxHeight: 300,
   overflow: "scroll",
   //backgroundColor: "blue"
 };
+
 
 export const Forms = () => {
   const date = new Date();
@@ -49,6 +53,9 @@ export const Forms = () => {
     window.location.reload();
   };
 
+console.log('from forms local storage shit',localStorage.getItem('user'));
+console.log('admin from local storage', localStorage.getItem('admin'));
+
   // posting vehicle and user info to the database
   const postUser = () => {
     console.log("posting vehicle");
@@ -64,7 +71,9 @@ export const Forms = () => {
       vehicle.model === ""
     ) {
       setFailedRegister(true);
-      alert("Please fill out all fields.");
+
+
+
       return;
     }
 
@@ -130,7 +139,7 @@ export const Forms = () => {
             }}
           >
             <h2> Personal Information </h2>
-            <Box sx={{ display: "flex", justifyContent: "space-between", width: '98.3%' }}>
+            <Box sx={{ display: "flex", justifyContent: "space-between", width: '100%' }}>
               <TextField
                 required
                 onChange={(e) =>
@@ -167,7 +176,7 @@ export const Forms = () => {
             <Box >
               <TextField
                 error={failedRegister}
-                sx={{ boxShadow: 2, m: 1, width: "15%" }}
+                sx={{ boxShadow: 2, m: 1, width: "17%" }}
                 variant="outlined"
                 required
                 id="state"

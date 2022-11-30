@@ -8,6 +8,13 @@ import { useReactToPrint } from "react-to-print";
 import flash from "../image/flash.png";
 import patch from "../image/patch.png";
 import shark from "../image/shark.png";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import swal from 'sweetalert';
+import Swal from 'sweetalert2'
 
 const tabStyle = {
   height: 500,
@@ -35,6 +42,7 @@ export default function PrintModal(props) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [flag, setFlag] = useState(false);
+  
   const componentRef = useRef();
   const vehicle = props.element.vehicle;
   const setFailedRegister = props.element.setFailedRegister;
@@ -135,7 +143,35 @@ export default function PrintModal(props) {
       vehicle.model === ""
     ) {
       setFailedRegister(true);
-      alert("Please fill out all fields.");
+      // This is SweetAlert2 Code Easter Egg
+      // Swal.fire({
+      //   title: 'Custom width, padding, color, background.',
+      //   width: 600,
+      //   padding: '3em',
+      //   color: '#6EF57B',
+      //   background: '#fff url("https://img.freepik.com/free-vector/green-cannabis-leaves-hand-drawn-cartoon-illustration_56104-1867.jpg?w=360")',
+      //   backdrop: `
+      //   rgba(0,0,123,0.4)
+      //     url("https://i.gifer.com/X11G.gif")
+      //     left top
+      //     no-repeat
+      //   `
+      // })
+      // swal({
+      //   title: "All Fields are required to be filled!",
+      //   text: "If you are experiencing please locate a Security Forces Member ",
+      //   icon: "error",
+      //   button: "Continue",
+      //   timer: 5000,
+      // });
+      Swal.fire({
+        title: "All Fields Are Required To Be Completed!",
+        text: "If you are experiencing locate a Security Forces Member ",
+        icon: "error",
+        button: "Continue",
+        showConfirmButton: false,
+        timer: 7000,
+      })
       return;
     }
     handleOpen();
