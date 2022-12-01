@@ -1,9 +1,11 @@
 const express = require("express");
 const app = express();
+const cookieParser = require('cookie-parser');
 require("dotenv").config();
 const cors = require("cors");
 const port = 8080;
 const vehicleRoutes = require("./routes/vehicles");
+const authRoutes = require("./routes/auth");
 const client = require("./db/client");
 const auth = require("./middleware/authentication");
 // DB Connection
@@ -31,6 +33,7 @@ client
 
 app.use(cors(corsOptions));
 app.use(express.json());
+app.use(cookieParser());
 
 //inital API route
 app.get("/", (req, res) => {
@@ -39,6 +42,7 @@ app.get("/", (req, res) => {
 
 //Primary API route
 app.use("/api", vehicleRoutes);
+app.use("/api", authRoutes);
 
 app.listen(port, () => {
   console.log(`server is running on port ${port}`);

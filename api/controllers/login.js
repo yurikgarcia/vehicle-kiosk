@@ -20,7 +20,8 @@ const login = async (req, res) => {
         expiresIn: process.env.JWT_LIFETIME,
       });
         console.log(user.rows[0]);
-        
+      // res.cookie('auth', token, { maxAge: 900000, httpOnly: true })
+      // res.cookie('user', user.rows[0].admin, { maxAge: 900000, httpOnly: true })
       res.status(200).json({
         token,
         user: {

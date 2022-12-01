@@ -6,9 +6,11 @@ import TextField from "@mui/material/TextField";
 import Container from "@mui/material/Container";
 import flash from "../image/flash.png";
 import { VehicleContext } from "../VehicleContext";
+import Swal from 'sweetalert2'
+
 
 export const Login = () => {
-  const { API, setUser, setIsAuthenticated } = useContext(VehicleContext);
+  const { API, setUser, setIsAuthenticated, setToken, setCookie, cookie, userDomain } = useContext(VehicleContext);
   // console.log(API);
   const [login, setLogin] = useState({
     user_name: "",
@@ -17,34 +19,52 @@ export const Login = () => {
   const navigate = useNavigate();
 
   const postLogin = () => {
-    fetch(`${API}/users/login`, {
+    fetch(`${API}/login`, {
       method: "POST",
       credentials: "include",
       headers: {
         "Content-Type": "application/json",
-        
       },
       body: JSON.stringify(login),
     })
       .then((res) => {
-        
         if (res.status === 200) {
           return res.json();
         } else {
-          alert("You're an imposter!");
+          Swal.fire({
+            title: "Invalid Credentials",
+            text: "If you are experiencing issues, please contact your administrator",
+            icon: "error",
+            button: "Continue",
+            showConfirmButton: false,
+            timer: 7000,
+          })
         }
       })
       .then((data) => {
-        localStorage.setItem("user", 'Bearer ' + data.token);
-        localStorage.setItem('admin', data.user.admin)
-        console.log('sign in data', data);
-        setUser(data);
-        setIsAuthenticated(data.user.admin);
+        if (data === undefined) return;
+        if (data !== undefined) {
+          console.log(data)
+          setCookie("Bearer", data.token, {
+             path: "/",
+              domain: userDomain,
+              maxAge: 70000, 
+              secure: true,
+        });
+        setCookie("user", data.user.admin, {
+          path: "/",
+          domain: userDomain,
+          maxAge: 70000,
+          secure: true,
+        })
+          setToken(data.token);
+          setUser(data);
+          setIsAuthenticated(data.user.admin);
+          navigate("/vehicles");
+        }
       })
-      .then(navigate("/vehicles"));
+      .catch((err) => console.log(err));
   };
-
-
 
   return (
     <Box

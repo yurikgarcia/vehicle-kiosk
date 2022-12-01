@@ -1,4 +1,5 @@
-import { React, useState, useRef } from "react";
+import { React, useState, useContext } from "react";
+import { VehicleContext }  from "../VehicleContext";
 import {
   Box,
   Button,
@@ -38,6 +39,7 @@ export const Forms = () => {
 
   const [failedRegister, setFailedRegister] = useState(false);
   const [flag, setFlag] = useState(false);
+  const { token, API } = useContext(VehicleContext);
   const [vehicle, setVehicle] = useState({
     first_name: "",
     last_name: "",
@@ -49,12 +51,15 @@ export const Forms = () => {
     date: today,
   });
 
+  
+ 
+
   const reload = () => {
     window.location.reload();
   };
-
-console.log('from forms local storage shit',localStorage.getItem('user'));
-console.log('admin from local storage', localStorage.getItem('admin'));
+// console.log('froms.js from context', token)
+// console.log('from forms local storage shit',localStorage.getItem('user'));
+// console.log('admin from local storage', localStorage.getItem('admin'));
 
   // posting vehicle and user info to the database
   const postUser = () => {
@@ -77,7 +82,7 @@ console.log('admin from local storage', localStorage.getItem('admin'));
       return;
     }
 
-    fetch("http://localhost:8080/api", {
+    fetch(`${API}`, {
       method: "POST",
       credentials: "include",
       body: JSON.stringify(vehicle),
