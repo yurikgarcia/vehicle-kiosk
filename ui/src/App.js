@@ -14,26 +14,44 @@ export const App = () => {
   const [cookies, setCookie, removeCookie] = useCookies(["auth", "user"]);
   const [user, setUser] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState();
+  const [flag, setFlag] = useState(false);
   const [token, setToken] = useState(null);
- 
 
-  const userDomain = "localhost"
+  const userDomain = "localhost";
   const API = "http://localhost:8080/api";
-  useEffect(() => {
+  
+
+  useMemo(() => {
+    if (cookies.user && cookies.Bearer) {
+      setUser(cookies);
+      setFlag(true)
+    }
+  }, [cookies]);
+
+const fetchData = (token) => {
     fetch(API, {
       method: "GET",
       credentials: "include",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        Authorization: `Bearer ${token}`
+      },
     })
       .then((res) => res.json())
-      .then((json) => setVisitorDetails(json));
-  }, []);
+      .then((json) => setVisitorDetails(json))
+      .catch((err) => console.log(err))
+  };
+  
 
-  useMemo(() => {
-    if (cookies.user) {
-      setUser(cookies);
+
+
+    if (flag === true) {
+      fetchData(cookies.Bearer);
+      setFlag(false);
     }
-  }, [cookies]);
-  console.log('cookies', cookies)
+  
+
+  
 
   const obj = {
     visitorDetails,
@@ -49,18 +67,21 @@ export const App = () => {
     setCookie,
     removeCookie,
     userDomain,
+    setFlag,
+    fetchData
   };
 
-  
-  if(!user){
+  if (!user) {
     return (
-      <Router>
-        <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="*" element={<Login />} />
-        </Routes>
-      </Router>
-    )
+      <VehicleContext.Provider value={obj}>
+        <Router>
+          <Routes>
+            <Route path="/" element={<Login />} />
+            <Route path="*" element={<Login />} />
+          </Routes>
+        </Router>
+      </VehicleContext.Provider>
+    );
   }
   // if (user === null) {
   //   return (

@@ -11,8 +11,17 @@ import shark from "./image/shark.png";
 
 export const Navbar = () => {
   const navigate = useNavigate();
+  const { removeCookie } = useContext(VehicleContext);
 
   const isAuthenticated = localStorage.getItem("admin");
+
+
+  const logout = () => {
+    removeCookie("Bearer");
+    removeCookie("user"); 
+    navigate("/");
+  }
+
   //  console.log("isAuth", isAuthenticated);
 
   return (
@@ -59,7 +68,7 @@ export const Navbar = () => {
             />
           </Box>
 
-          <Button onClick={() => navigate("/")} color="inherit">
+          <Button onClick={() => logout()} color="inherit">
             Logout
           </Button>
         </Toolbar>

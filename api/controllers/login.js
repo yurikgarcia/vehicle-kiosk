@@ -14,14 +14,15 @@ const login = async (req, res) => {
       return res.status(400).json({ message: "Invalid credentials" });
     }
      const isMatch = await bcrypt.compare(password, user.rows[0].password);
-     console.log(isMatch)
+     
     if (isMatch) {
       const token = jwt.sign({ id: user.rows[0].id }, process.env.JWT_SECRET, {
         expiresIn: process.env.JWT_LIFETIME,
       });
-        console.log(user.rows[0]);
+        // console.log('user from login.js',user.rows[0]);
       // res.cookie('auth', token, { maxAge: 900000, httpOnly: true })
       // res.cookie('user', user.rows[0].admin, { maxAge: 900000, httpOnly: true })
+      
       res.status(200).json({
         token,
         user: {

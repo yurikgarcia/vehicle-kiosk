@@ -16,6 +16,10 @@ import DialogTitle from "@mui/material/DialogTitle";
 import swal from 'sweetalert';
 import Swal from 'sweetalert2'
 
+
+
+
+
 const tabStyle = {
   height: 500,
   maxHeight: 300,
@@ -37,6 +41,17 @@ const style = {
   p: 4,
 };
 
+const printStyle = {
+  position: "absolute",
+  top: '10px',
+  bottom: "10px",
+  left: "10px",
+  right: "10px",
+
+  
+
+}
+
 export default function PrintModal(props) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -52,7 +67,14 @@ export default function PrintModal(props) {
     onAfterPrint: () => reload(),
   });
 
+  const marginTop = "10px"
+  const marginBottom = "10px"
+
   // console.log("FROM PRINT MODAL", props);
+
+
+
+  
 
   const postUser = () => {
     console.log("posting vehicle");
@@ -74,7 +96,8 @@ export default function PrintModal(props) {
       });
     console.log("vehicle has been posted");
     handleClose();
-  };
+  };  
+  
 
   const ComponentToPrint = React.forwardRef((props, ref) => {
     //   const date = new Date();

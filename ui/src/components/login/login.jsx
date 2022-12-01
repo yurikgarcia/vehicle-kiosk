@@ -7,10 +7,11 @@ import Container from "@mui/material/Container";
 import flash from "../image/flash.png";
 import { VehicleContext } from "../VehicleContext";
 import Swal from 'sweetalert2'
+// import { setFlagsFromString } from "v8";
 
 
 export const Login = () => {
-  const { API, setUser, setIsAuthenticated, setToken, setCookie, cookie, userDomain } = useContext(VehicleContext);
+  const { API, setUser, setIsAuthenticated, setToken, setCookie, cookie, userDomain, setFlag, fetchData } = useContext(VehicleContext);
   // console.log(API);
   const [login, setLogin] = useState({
     user_name: "",
@@ -28,6 +29,9 @@ export const Login = () => {
       body: JSON.stringify(login),
     })
       .then((res) => {
+        if (res.status === 204) {
+          return
+        }
         if (res.status === 200) {
           return res.json();
         } else {
@@ -48,19 +52,21 @@ export const Login = () => {
           setCookie("Bearer", data.token, {
              path: "/",
               domain: userDomain,
-              maxAge: 70000, 
+              maxAge: 8000, 
               secure: true,
         });
         setCookie("user", data.user.admin, {
           path: "/",
           domain: userDomain,
-          maxAge: 70000,
+          maxAge: 8000,
           secure: true,
         })
           setToken(data.token);
+          console.log(data.token)
           setUser(data);
           setIsAuthenticated(data.user.admin);
           navigate("/vehicles");
+          
         }
       })
       .catch((err) => console.log(err));

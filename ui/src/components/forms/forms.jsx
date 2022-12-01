@@ -39,7 +39,8 @@ export const Forms = () => {
 
   const [failedRegister, setFailedRegister] = useState(false);
   const [flag, setFlag] = useState(false);
-  const { token, API } = useContext(VehicleContext);
+  const { API, user } = useContext(VehicleContext);
+  
   const [vehicle, setVehicle] = useState({
     first_name: "",
     last_name: "",
@@ -88,6 +89,9 @@ export const Forms = () => {
       body: JSON.stringify(vehicle),
       headers: {
         "Content-Type": "application/json; charset=utf-8",
+        // "Authorization": `Bearer ${user.Bearer}`
+
+
       },
     })
       .then((res) => res.json())
