@@ -19,6 +19,7 @@ export const Navbar = () => {
   const logout = () => {
     removeCookie("Bearer");
     removeCookie("user"); 
+    removeCookie("auth");
     navigate("/");
   }
 

@@ -20,36 +20,42 @@ export const App = () => {
   const userDomain = "localhost";
   const API = "http://localhost:8080/api";
   
+ if(user === null){ 
+  console.log('user is null')
+ }
+ if (user !== null) {
+    console.log("user is not null");
+ }
+
 
   useMemo(() => {
-    if (cookies.user && cookies.Bearer) {
+    if (cookies.auth) {
       setUser(cookies);
       setFlag(true)
     }
   }, [cookies]);
-
-const fetchData = (token) => {
+    
+ 
+  if (user !== null && flag === true) {
     fetch(API, {
       method: "GET",
       credentials: "include",
       headers: {
         "Content-Type": "application/json; charset=utf-8",
-        Authorization: `Bearer ${token}`
       },
     })
       .then((res) => res.json())
-      .then((json) => setVisitorDetails(json))
+      .then((json) => {
+        setVisitorDetails(json)
+        setFlag(false)})
       .catch((err) => console.log(err))
   };
   
 
 
 
-    if (flag === true) {
-      fetchData(cookies.Bearer);
-      setFlag(false);
-    }
-  
+
+
 
   
 
@@ -68,7 +74,7 @@ const fetchData = (token) => {
     removeCookie,
     userDomain,
     setFlag,
-    fetchData
+   
   };
 
   if (!user) {

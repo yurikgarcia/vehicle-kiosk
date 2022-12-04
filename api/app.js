@@ -41,8 +41,8 @@ app.get("/", (req, res) => {
 });
 
 //Primary API route
+app.use("/api", authRoutes);
 app.use("/api", auth, vehicleRoutes);
-app.use("/api",  authRoutes);
 
 app.listen(port, () => {
   console.log(`server is running on port ${port}`);

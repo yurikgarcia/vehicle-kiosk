@@ -27,11 +27,10 @@ export const Login = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(login),
+      
     })
+    
       .then((res) => {
-        if (res.status === 204) {
-          return
-        }
         if (res.status === 200) {
           return res.json();
         } else {
@@ -48,21 +47,22 @@ export const Login = () => {
       .then((data) => {
         if (data === undefined) return;
         if (data !== undefined) {
-          console.log(data)
-          setCookie("Bearer", data.token, {
-             path: "/",
-              domain: userDomain,
-              maxAge: 8000, 
-              secure: true,
-        });
-        setCookie("user", data.user.admin, {
-          path: "/",
-          domain: userDomain,
-          maxAge: 8000,
-          secure: true,
-        })
-          setToken(data.token);
-          console.log(data.token)
+          console.log('login.js data',data)
+        //   setCookie("Bearer", data.token, {
+        //      path: "/",
+        //       domain: userDomain,
+        //       maxAge: 8000, 
+        //       secure: true,
+        // });
+        // setCookie("user", data.user.admin, {
+        //   path: "/",
+        //   domain: userDomain,
+        //   maxAge: 8000,
+        //   secure: true,
+        // })
+          // setToken(data.token);
+          // console.log(data.token)
+          setFlag(true)
           setUser(data);
           setIsAuthenticated(data.user.admin);
           navigate("/vehicles");
