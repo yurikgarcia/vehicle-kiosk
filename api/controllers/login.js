@@ -64,4 +64,9 @@ const register = async (req, res) => {
   }
 };
 
-module.exports = { login, register };
+const logout = async (req, res) => {
+  res.clearCookie("auth");
+  res.status(200).json({ message: "success" });
+}
+
+module.exports = { login, register, logout };
