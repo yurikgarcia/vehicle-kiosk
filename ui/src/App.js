@@ -19,6 +19,8 @@ export const App = () => {
 
   const userDomain = "localhost";
   const API = "http://localhost:8080/api";
+
+  //testing update
   
  if(user === null){ 
   console.log('user is null')
