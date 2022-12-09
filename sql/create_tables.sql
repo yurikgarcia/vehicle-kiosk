@@ -2,7 +2,7 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 CREATE TABLE IF NOT EXISTS sfs45_cape
 (
-    id uuid NOT NULL DEFAULT uuid_generate_v4(),
+    id uuid NOT NULL DEFAULT uuid_generate_v4 (),
     first_name character varying(255) COLLATE pg_catalog."default",
     last_name character varying(255) COLLATE pg_catalog."default",
     drivers_license character varying(255) COLLATE pg_catalog."default",
@@ -14,21 +14,21 @@ CREATE TABLE IF NOT EXISTS sfs45_cape
     CONSTRAINT sfs45_cape_pkey PRIMARY KEY (id)
 );
 
-TABLESPACE pg_default;
+-- TABLESPACE pg_default;
 
-ALTER TABLE IF EXISTS sfs45_cape
-    OWNER to postgres;
+-- ALTER TABLE IF EXISTS sfs45_cape
+--     OWNER to postgres;
 
-CREATE TABLE IF NOT EXISTS public.users
+CREATE TABLE IF NOT EXISTS users
 (
-    id uuid NOT NULL DEFAULT uuid_generate_v4(),
+    id uuid NOT NULL DEFAULT uuid_generate_v4 (),
     admin boolean NOT NULL DEFAULT false,
     password character varying COLLATE pg_catalog."default" NOT NULL,
     user_name character varying(25) COLLATE pg_catalog."default",
     CONSTRAINT users_pkey PRIMARY KEY (id)
 )
 
-TABLESPACE pg_default;
+-- TABLESPACE pg_default;
 
-ALTER TABLE IF EXISTS public.users
-    OWNER to postgres;
+-- ALTER TABLE IF EXISTS users
+--     OWNER to postgres;
