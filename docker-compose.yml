@@ -1,7 +1,7 @@
 version: "3"
 
-# volumes:
-#   pgdatasource:
+volumes:
+  postgres-data:
 
 services:
   gatekiosk-db:
@@ -10,6 +10,7 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=gatekiosk
     ports:
       - "5432:5432"
     healthcheck:
@@ -29,12 +30,12 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - NODE_ENV=development
-      - PGHOST=postgres
-      - PGUSER=postgres
-      - PGPASSWORD=password
-      - PGPORT=5432
-      - PGDATABASE=postgres
+      # - NODE_ENV=development
+      - DB_HOST=gatekiosk-db
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=password
+      - DB_NAME=gatekiosk
       # - POSTGRES_DB=gatekiosk-db
     volumes:
       - type: bind
