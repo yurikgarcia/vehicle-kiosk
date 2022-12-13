@@ -48,20 +48,17 @@ export const Login = () => {
         if (data === undefined) return;
         if (data !== undefined) {
           console.log('login.js data',data)
-        //   setCookie("Bearer", data.token, {
-        //      path: "/",
-        //       domain: userDomain,
-        //       maxAge: 8000, 
-        //       secure: true,
-        // });
-        // setCookie("user", data.user.admin, {
-        //   path: "/",
-        //   domain: userDomain,
-        //   maxAge: 8000,
-        //   secure: true,
-        // })
-          // setToken(data.token);
-          // console.log(data.token)
+          data.user.admin === true ? setCookie('user', '2055', {
+            path: '/',
+            domain: userDomain,
+            maxAge: 8000,
+            secure: true,
+          }) : setCookie('user', '5050', {
+            path: '/',
+            domain: userDomain,
+            maxAge: 8000,
+            secure: true,
+          })
           setFlag(true)
           setUser(data);
           setIsAuthenticated(data.user.admin);

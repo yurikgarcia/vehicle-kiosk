@@ -1,4 +1,4 @@
-const client = require("../db/client");
+const client = require("../../db/client");
 
 
 //get all vehicle info from db

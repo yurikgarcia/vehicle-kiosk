@@ -21,24 +21,15 @@ export const App = () => {
   const API = "http://localhost:8080/api";
 
   //testing update
-  
- if(user === null){ 
-  console.log('user is null')
- }
- if (user !== null) {
-    console.log("user is not null");
- }
-
 
   useMemo(() => {
-    if (cookies.auth) {
+    if (cookies.user) {
       setUser(cookies);
-      setFlag(true)
     }
   }, [cookies]);
-    
- 
-  if (user !== null && flag === true) {
+
+  // if (user !== null && flag === true) {
+  useEffect(() => {
     fetch(API, {
       method: "GET",
       credentials: "include",
@@ -49,15 +40,11 @@ export const App = () => {
       .then((res) => res.json())
       .then((json) => {
         setVisitorDetails(json)
-        setFlag(false)})
-      .catch((err) => console.log(err))
-  };
-  
-
-
-
-
-
+        setFlag(false)
+      })
+      .catch((err) => console.log(err));
+  }, [flag]);
+  // };
 
   
 
@@ -76,7 +63,6 @@ export const App = () => {
     removeCookie,
     userDomain,
     setFlag,
-   
   };
 
   if (!user) {

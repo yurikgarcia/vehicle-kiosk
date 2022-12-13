@@ -1,5 +1,5 @@
 import { React, useState, useContext } from "react";
-import { VehicleContext }  from "../VehicleContext";
+import { VehicleContext } from "../VehicleContext";
 import {
   Box,
   Button,
@@ -23,14 +23,12 @@ import { height } from "@mui/system";
 import PrintModal from "./print_copy";
 import { renderMatches } from "react-router";
 
-
 const tabStyle = {
   height: 500,
   maxHeight: 300,
   overflow: "scroll",
   //backgroundColor: "blue"
 };
-
 
 export const Forms = () => {
   const date = new Date();
@@ -39,8 +37,8 @@ export const Forms = () => {
 
   const [failedRegister, setFailedRegister] = useState(false);
   const [flag, setFlag] = useState(false);
-  const { API, user } = useContext(VehicleContext);
-  
+  const { API, user, cookies } = useContext(VehicleContext);
+
   const [vehicle, setVehicle] = useState({
     first_name: "",
     last_name: "",
@@ -52,15 +50,16 @@ export const Forms = () => {
     date: today,
   });
 
-  
- 
+  if (!cookies.user) {
+    window.location.href = "/login";
+  }
 
   const reload = () => {
     window.location.reload();
   };
-// console.log('froms.js from context', token)
-// console.log('from forms local storage shit',localStorage.getItem('user'));
-// console.log('admin from local storage', localStorage.getItem('admin'));
+  // console.log('froms.js from context', token)
+  // console.log('from forms local storage shit',localStorage.getItem('user'));
+  // console.log('admin from local storage', localStorage.getItem('admin'));
 
   // posting vehicle and user info to the database
   const postUser = () => {
@@ -78,8 +77,6 @@ export const Forms = () => {
     ) {
       setFailedRegister(true);
 
-
-
       return;
     }
 
@@ -90,8 +87,6 @@ export const Forms = () => {
       headers: {
         "Content-Type": "application/json; charset=utf-8",
         // "Authorization": `Bearer ${user.Bearer}`
-
-
       },
     })
       .then((res) => res.json())
@@ -148,7 +143,13 @@ export const Forms = () => {
             }}
           >
             <h2> Personal Information </h2>
-            <Box sx={{ display: "flex", justifyContent: "space-between", width: '100%' }}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                width: "100%",
+              }}
+            >
               <TextField
                 required
                 onChange={(e) =>
@@ -182,7 +183,7 @@ export const Forms = () => {
                 sx={{ boxShadow: 2, m: 1 }}
               />
             </Box>
-            <Box >
+            <Box>
               <TextField
                 error={failedRegister}
                 sx={{ boxShadow: 2, m: 1, width: "17%" }}
@@ -271,47 +272,53 @@ export const Forms = () => {
               />
             </Box>
             <h2> Vehicle Information </h2>
-            <Box sx={{ display: "flex", justifyContent: "space-between", width: '100%' }}>
-            <TextField
-              error={failedRegister}
-              onChange={(e) =>
-                setVehicle((prev) => {
-                  return { ...prev, plate: e.target.value };
-                })
-              }
-              required
-              id="plate"
-              label="Plate Number"
-              name="Plate Number"
-              sx={{ boxShadow: 2, m: 1 , width: '100%'}}
-            />
-            <TextField
-              sx={{ boxShadow: 2, width: 150, m: 1 , width: '100%'}}
-              error={failedRegister}
-              onChange={(e) =>
-                setVehicle((prev) => {
-                  return { ...prev, make: e.target.value };
-                })
-              }
-              required
-              id="make"
-              label="Make"
-              name="make"
-            />
-            <TextField
-              sx={{ boxShadow: 2, width: 150, m: 1 , width: '100%'}}
-              error={failedRegister}
-              onChange={(e) =>
-                setVehicle((prev) => {
-                  return { ...prev, model: e.target.value };
-                })
-              }
-              required
-              id="model"
-              label="Model"
-              name="model"
-            />
-          </Box>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                width: "100%",
+              }}
+            >
+              <TextField
+                error={failedRegister}
+                onChange={(e) =>
+                  setVehicle((prev) => {
+                    return { ...prev, plate: e.target.value };
+                  })
+                }
+                required
+                id="plate"
+                label="Plate Number"
+                name="Plate Number"
+                sx={{ boxShadow: 2, m: 1, width: "100%" }}
+              />
+              <TextField
+                sx={{ boxShadow: 2, width: 150, m: 1, width: "100%" }}
+                error={failedRegister}
+                onChange={(e) =>
+                  setVehicle((prev) => {
+                    return { ...prev, make: e.target.value };
+                  })
+                }
+                required
+                id="make"
+                label="Make"
+                name="make"
+              />
+              <TextField
+                sx={{ boxShadow: 2, width: 150, m: 1, width: "100%" }}
+                error={failedRegister}
+                onChange={(e) =>
+                  setVehicle((prev) => {
+                    return { ...prev, model: e.target.value };
+                  })
+                }
+                required
+                id="model"
+                label="Model"
+                name="model"
+              />
+            </Box>
           </form>
         </Container>
 

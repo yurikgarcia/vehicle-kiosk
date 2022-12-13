@@ -11,26 +11,21 @@ import shark from "./image/shark.png";
 
 export const Navbar = () => {
   const navigate = useNavigate();
-  const { removeCookie } = useContext(VehicleContext);
+  const { removeCookie, cookies } = useContext(VehicleContext);
 
-  const isAuthenticated = localStorage.getItem("admin");
-
+  const isAuthenticated = cookies.user;
 
   const logout = () => {
-    removeCookie("Bearer");
-    removeCookie("user"); 
-    removeCookie("auth");
+    removeCookie("user");
     navigate("/");
-  }
-
-  //  console.log("isAuth", isAuthenticated);
+  };
 
   return (
     <Box sx={{ display: "flex" }}>
       <AppBar position="static">
         <Toolbar sx={{ width: "100%" }}>
           <Box sx={{ width: "45%" }}>
-            {isAuthenticated === "true" ? (
+            {isAuthenticated === "2055" ? (
               <>
                 <Button
                   onClick={() => navigate("/history")}

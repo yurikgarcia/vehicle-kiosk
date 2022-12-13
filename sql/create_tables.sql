@@ -1,5 +1,8 @@
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
+
+
+
 CREATE TABLE IF NOT EXISTS sfs45_cape
 (
     id uuid NOT NULL DEFAULT uuid_generate_v4 (),

@@ -1,16 +1,21 @@
 const express = require("express");
 const app = express();
-const cookieParser = require('cookie-parser');
+const cookieParser = require("cookie-parser");
 require("dotenv").config();
 const cors = require("cors");
 const port = 8080;
 const vehicleRoutes = require("./routes/vehicles");
 const authRoutes = require("./routes/auth");
-const client = require("./db/client");
+const client = require("../db/client");
 const auth = require("./middleware/authentication");
 // DB Connection
 
-const whitelist = ["http://localhost:3000"];
+const whitelist = [
+  "http://localhost:3000",
+  "https://localhost:3000",
+  "http://localhost:3001",
+  "https://localhost:3001",
+];
 const corsOptions = {
   credentials: true,
   origin: function (origin, callback) {
@@ -26,10 +31,24 @@ const corsOptions = {
 };
 
 //DataBase Connection initialization
-client
-  .connect()
-  .then(() => console.log("Connected to database"))
-  .catch((err) => console.log(err));
+let retries = 5;
+while (retries) {
+  try {
+    client.connect();
+    console.log("Connected to database");
+    break;
+  } catch (err) {
+    console.log(err);
+    retries -= 1;
+    console.log(`retries left: ${retries}`);
+    // wait 5 seconds
+    new Promise((res) => setTimeout(res, 5000));
+  }
+}
+// client
+//   .connect()
+//   .then(() => console.log("Connected to database"))
+//   .catch((err) => console.log(err));
 
 app.use(cors(corsOptions));
 app.use(express.json());

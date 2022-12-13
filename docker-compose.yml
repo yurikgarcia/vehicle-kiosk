@@ -8,11 +8,8 @@ services:
     image: postgres
     restart: always
     environment:
-      - DATABASE_HOST=localhost
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=docker
-      - POSTGRES_PORT=5432
-      - POSTGRES_DB=gatekiosk
+      - POSTGRES_PASSWORD=password
     ports:
       - "5432:5432"
     healthcheck:
@@ -21,8 +18,8 @@ services:
       timeout: 5s
       retries: 10
     volumes:
+      - ./postgres-data:/var/lib/postgresql/data
       - ./sql/create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
-    #   - pgdatasource:/var/lib/postgresql/data
 
   gatekiosk-api:
     build: api/
@@ -33,15 +30,16 @@ services:
       - "8080:8080"
     environment:
       - NODE_ENV=development
-      - DATABASE_HOST=gatekiosk-db
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=docker
-      - POSTGRES_PORT=5432
-      - POSTGRES_DB=postgres
-    # volumes:
-    #   - type: bind
-    #     source: ./api
-    #     target: /app
+      - PGHOST=postgres
+      - PGUSER=postgres
+      - PGPASSWORD=password
+      - PGPORT=5432
+      - PGDATABASE=postgres
+      # - POSTGRES_DB=gatekiosk-db
+    volumes:
+      - type: bind
+        source: ./api/src
+        target: /app/src
     command: npm run start
     restart: on-failure
     healthcheck:
@@ -56,11 +54,11 @@ services:
     depends_on:
       - "gatekiosk-api"
     ports:
-      - "3001:3000"
+      - "3000:3000"
     volumes:
       - type: bind
         source: ./ui/src
-        target: /app
+        target: /app/src
     restart: on-failure
     healthcheck:
       test: curl --fail http://localhost:3000 || exit 1

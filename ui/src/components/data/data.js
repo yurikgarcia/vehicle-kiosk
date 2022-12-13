@@ -6,7 +6,11 @@ import { VehicleContext } from "../VehicleContext";
 
 export const Data = () => {
   const [vehicleData, setVehicleData] = useState([]);
-  const { API, visitorDetails } = useContext(VehicleContext);
+  const { API, visitorDetails, cookies } = useContext(VehicleContext);
+
+  
+
+  
 
   console.log(API);
   console.log(visitorDetails);
