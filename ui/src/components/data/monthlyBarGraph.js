@@ -3,18 +3,17 @@ import ReactApexChart from "react-apexcharts";
 
 export const MonthlyBarGraph = (props) => {
   const vehicleData = props.element.visitorDetails;
-  const today = props.element.today;
-  
+  const lastYear = props.element.lastYear;
 
   const combineDates = [];
   const numberOFVehicles = [];
 
   const date = vehicleData.map((data) => {
     const newDay = data.date.slice(0, 7);
-    if (!combineDates.includes(newDay)) {
+    if (!combineDates.includes(newDay) && newDay >= lastYear) {
       combineDates.push(newDay);
     }
-    
+
     return;
   });
 

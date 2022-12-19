@@ -3,44 +3,34 @@ import ReactApexChart from "react-apexcharts";
 
 export const DailyBarGraph = (props) => {
   const vehicleData = props.element.visitorDetails;
-  const today = props.element.today;
-  const month = props.element.month;
-  console.log(month)
-  
-  
-  
+  const lastMonth = props.element.lastMonth;
+  console.log(vehicleData)
+
   const combineDates = [];
   const numberOFVehicles = [];
-  
-  
- 
-
 
   const date = vehicleData.map((data) => {
     const newDay = data.date.slice(0, 10);
-    const newMonth = data.date.slice(5, 7);
-    if(newMonth >= month){
+
+    if (newDay >= lastMonth) {
       if (!combineDates.includes(newDay)) {
-      combineDates.push(newDay);
+        combineDates.push(newDay);
+      }
+      return;
     }
-    }
-    
-    return;
   });
 
   useMemo(() => {
     for (let i = 0; i < combineDates.length; i++) {
       let count = 0;
       for (let j = 0; j < vehicleData.length; j++) {
-        //if day is -30 from today return
-
         if (combineDates[i] === vehicleData[j].date.slice(0, 10)) {
           count++;
         }
       }
       numberOFVehicles.push(count);
     }
-  });
+  }, [combineDates, vehicleData]);
 
   const chartData = {
     chart: {
