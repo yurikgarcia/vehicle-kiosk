@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS sfs45_cape
     make character varying(255) COLLATE pg_catalog."default",
     model character varying(255) COLLATE pg_catalog."default",
     state character varying COLLATE pg_catalog."default",
-    date date,
+    date timestamp,
     CONSTRAINT sfs45_cape_pkey PRIMARY KEY (id)
 );
 
