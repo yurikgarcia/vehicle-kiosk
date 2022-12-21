@@ -57,7 +57,7 @@ export const MonthlyBarGraph = (props) => {
 
     legend: {
       // position: '',
-      width: 400,
+      width: 300,
       // position: 'top',
     },
     series: [

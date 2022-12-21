@@ -4,14 +4,13 @@ import ReactApexChart from "react-apexcharts";
 export const DailyBarGraph = (props) => {
   const vehicleData = props.element.visitorDetails;
   const lastMonth = props.element.lastMonth;
-  console.log(vehicleData)
+ 
 
   const combineDates = [];
   const numberOFVehicles = [];
 
   const date = vehicleData.map((data) => {
     const newDay = data.date.slice(0, 10);
-
     if (newDay >= lastMonth) {
       if (!combineDates.includes(newDay)) {
         combineDates.push(newDay);
@@ -60,7 +59,7 @@ export const DailyBarGraph = (props) => {
 
     legend: {
       // position: '',
-      width: 400,
+      width: 300,
       // position: 'top',
     },
     series: [

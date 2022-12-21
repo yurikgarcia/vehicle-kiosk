@@ -8,6 +8,8 @@ import { Data } from "./components/data/data";
 import { History } from "./components/history/history";
 import { VehicleContext } from "./components/VehicleContext";
 import { useCookies } from "react-cookie";
+import { MuiPickersUtilsProvider } from "@material-ui/pickers";
+import DateFnsUtils from "@date-io/date-fns";
 
 export const App = () => {
   const [visitorDetails, setVisitorDetails] = useState([]);
@@ -39,14 +41,12 @@ export const App = () => {
     })
       .then((res) => res.json())
       .then((json) => {
-        setVisitorDetails(json)
-        setFlag(false)
+        setVisitorDetails(json);
+        setFlag(false);
       })
       .catch((err) => console.log(err));
   }, [flag]);
   // };
-
-  
 
   const obj = {
     visitorDetails,
@@ -92,20 +92,22 @@ export const App = () => {
 
   return (
     <VehicleContext.Provider value={obj}>
-      <Router>
-        <Navbar />
+      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <Router>
+          <Navbar />
 
-        <Routes>
-          <Route path="/vehicles" element={<Forms />} />
-          <Route path="/" element={<Login />} />
+          <Routes>
+            <Route path="/vehicles" element={<Forms />} />
+            <Route path="/" element={<Login />} />
 
-          <Route path="/data" element={<Data />} />
-          <Route path="/History" element={<History />} />
-          <Route path="*" element={<Forms />} />
+            <Route path="/data" element={<Data />} />
+            <Route path="/History" element={<History />} />
+            <Route path="*" element={<Forms />} />
 
-          {/* <Route path="/" element={<Login />} /> */}
-        </Routes>
-      </Router>
+            {/* <Route path="/" element={<Login />} /> */}
+          </Routes>
+        </Router>
+      </MuiPickersUtilsProvider>
     </VehicleContext.Provider>
   );
 };

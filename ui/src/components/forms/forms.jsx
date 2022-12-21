@@ -61,6 +61,10 @@ export const Forms = () => {
   // console.log('from forms local storage shit',localStorage.getItem('user'));
   // console.log('admin from local storage', localStorage.getItem('admin'));
 
+
+  const ab = new Date()
+  console.log(ab.toDateString())
+
   // posting vehicle and user info to the database
   const postUser = () => {
     console.log("posting vehicle");

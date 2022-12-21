@@ -22,7 +22,7 @@ const login = async (req, res) => {
       });
       // console.log('user from login.js',user.rows[0]);
       res.cookie("auth", token, {
-        maxAge: 900000,
+        maxAge: 28800000,
         httpOnly: true,
         secure: true,
       });

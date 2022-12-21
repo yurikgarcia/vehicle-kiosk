@@ -35,4 +35,10 @@ UI Dependencies
 - npm i react-apexcharts
 -npm install --save sweetalert
 
+
+to use with docker
+    - docker-compose up --build
+    - enter "username", "password", "admin" in postman to create a user
+    
+
  
