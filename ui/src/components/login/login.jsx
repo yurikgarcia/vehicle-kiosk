@@ -29,7 +29,6 @@ export const Login = () => {
       body: JSON.stringify(login),
       
     })
-    
       .then((res) => {
         if (res.status === 200) {
           return res.json();
@@ -68,6 +67,8 @@ export const Login = () => {
       })
       .catch((err) => console.log(err));
   };
+
+  console.log("login", login)
 
   return (
     <Box

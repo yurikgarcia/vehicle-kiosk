@@ -7,4 +7,6 @@ const client = new Client({
   database: process.env.DB_NAME || 'gate-kiosk'
 });
 
+
+
 module.exports = client;

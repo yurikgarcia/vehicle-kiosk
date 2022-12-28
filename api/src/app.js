@@ -15,6 +15,7 @@ const whitelist = [
   "https://localhost:3000",
   "http://localhost:3001",
   "https://localhost:3001",
+  "https://localhost:8080",
 ];
 const corsOptions = {
   credentials: true,
